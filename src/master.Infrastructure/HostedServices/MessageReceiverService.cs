@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using master.Core.Models;
 
 namespace master.Infrastructure.HostedServices
 {
@@ -28,7 +29,7 @@ namespace master.Infrastructure.HostedServices
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.QueueDeclare(queue: "hello",
+                channel.QueueDeclare(queue: "OrderUpdateStatus",
                                      durable: false,
                                      exclusive: false,
                                      autoDelete: false,
@@ -39,9 +40,17 @@ namespace master.Infrastructure.HostedServices
                 {
                     var body = ea.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);
-                    Console.WriteLine(" [x] Received {0}", message);
+                    Console.WriteLine(message);
+                    var options = new System.Text.Json.JsonSerializerOptions()
+                    {
+                        PropertyNameCaseInsensitive = true,
+                        Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
+
+                    };
+                    var updateMsg = System.Text.Json.JsonSerializer.Deserialize<UpdateOrderStatusMessage>(message, options );
+                    Console.WriteLine(updateMsg.ToString());
                 };
-                channel.BasicConsume(queue: "hello",
+                channel.BasicConsume(queue: "OrderUpdateStatus",
                                      autoAck: true,
                                      consumer: consumer);
 

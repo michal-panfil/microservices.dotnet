@@ -54,8 +54,8 @@ namespace master.Infrastructure.HostedServices
                                      autoAck: true,
                                      consumer: consumer);
 
-                Console.WriteLine(" Press [enter] to exit.");
-                Console.ReadLine();
+                WaitHandle.WaitAny(new[] { stoppingToken.WaitHandle });
+
                 await Task.CompletedTask;
 
             }

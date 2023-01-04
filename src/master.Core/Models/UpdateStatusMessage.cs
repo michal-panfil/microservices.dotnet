@@ -9,7 +9,7 @@ namespace master.Core.Models
 {
     public class UpdateOrderStatusMessage
     {
-        public string OrderId { get; set; }
+        public int OrderId { get; set; }
         public OrderStatus Status { get; set; }
 
         public DateTime Date { get; set; }

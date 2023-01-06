@@ -4,12 +4,24 @@ services:
     build: ./src/.
     ports:
       - "5001:80"
-  rabittmq:
+    depends_on:
+      "rabbitmq" :
+        condition: service_healthy
+  rabbitmq:
     image: "rabbitmq:3-management"
-    container_name: 'rabbitmq'
+    container_name: "rabbitmq"
+    hostname: "rabbitmq"
+    labels:
+      NAME: "rabbitmq"
     ports:
       - "8080:15672"
       - "5672:5672"
     environment:
     - RABBITMQ_DEFAULT_USER=user
     - RABBITMQ_DEFAULT_PASS=password
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 10
+

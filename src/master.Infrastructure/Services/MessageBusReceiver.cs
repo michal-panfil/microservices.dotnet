@@ -18,7 +18,7 @@ namespace master.Infrastructure.Services
             Console.WriteLine("starting message receiver service");
             var factory = new ConnectionFactory()
             {
-                HostName = "localhost",
+                HostName = "rabbitmq",
                 UserName = "user",
                 Password = "password"
             };

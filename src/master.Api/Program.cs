@@ -14,7 +14,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        builder.Services.AddHostedService<MessageReceiverService>();
+       // builder.Services.AddHostedService<MessageReceiverService>();
         builder.Services.AddTransient<IMessageBusReceiver, MessageBusReceiver>();
 
         builder.Services.AddControllers();

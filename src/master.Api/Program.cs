@@ -1,6 +1,8 @@
 
 using master.Core.Interfaces;
+using master.Infrastructure.Data;
 using master.Infrastructure.HostedServices;
+using Microsoft.EntityFrameworkCore;
 using master.Infrastructure.Services;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -21,7 +23,9 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddDbContext<OrderContext>(x => x.UseSqlite(@"Data Source=C:\db\orderingMaster.db"));
         builder.Services.AddSingleton(() => new JsonSerializerOptions(JsonSerializerDefaults.Web)
+
         {
             Converters = { new JsonStringEnumConverter(), }
         });

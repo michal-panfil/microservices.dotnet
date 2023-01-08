@@ -11,6 +11,7 @@ namespace master.Core.Models.Entities
         public int Id { get; set; }
         public IList<OrderItem> Items { get; set; }
 
-        public Customer Customer { get; set; }
+        public int CustomerId { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

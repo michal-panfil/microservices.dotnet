@@ -12,7 +12,7 @@ namespace master.Infrastructure
 {
     public static class ServiceExtensions
     {
-        public static void AddDatabase(IConfiguration configuration, IServiceCollection services)
+        public static void AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<OrderContext>(x => x.UseSqlite(@"Data Source=C:\db\orderingMaster.db"));
         }

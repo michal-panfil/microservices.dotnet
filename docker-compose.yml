@@ -7,6 +7,12 @@ services:
     depends_on:
       "rabbitmq" :
         condition: service_healthy
+  ui:
+    build: ./src/myeshop/.
+    ports:
+      - "5002:80"
+    depends_on:
+      - web
   rabbitmq:
     image: "rabbitmq:3-management"
     container_name: "rabbitmq"

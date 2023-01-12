@@ -26,11 +26,17 @@ public class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddDatabase(builder.Configuration);
         builder.Services.AddSingleton(() => new JsonSerializerOptions(JsonSerializerDefaults.Web)
-
         {
             Converters = { new JsonStringEnumConverter(), }
         });
-        
+
+        builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        }));
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -45,7 +51,7 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
-
+        app.UseCors("MyPolicy");
 
         app.MapControllers();
 

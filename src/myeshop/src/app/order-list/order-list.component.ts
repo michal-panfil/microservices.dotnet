@@ -16,7 +16,7 @@ export class OrderListComponent implements OnInit {
  callWebApiForOrders() {
   console.log("lets call api");
 
-    this.http.get<Order[]>('http://web-1:5001/api/order').subscribe(result => {
+    this.http.get<Order[]>('http://localhost:5001/api/order').subscribe(result => {
       console.log(result);
       this.orders = result;
     }, error => console.error(error));
@@ -24,5 +24,24 @@ export class OrderListComponent implements OnInit {
 }
 interface Order {
   id: number;
+  customer : Customer;
+  items: OrderItem[];
 
+}
+
+interface Customer {
+  id: number;
+  name: string;
+  email: string;
+}
+interface OrderItem {
+  id: number;
+  quantity: number;
+  product: Product;
+}
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
 }

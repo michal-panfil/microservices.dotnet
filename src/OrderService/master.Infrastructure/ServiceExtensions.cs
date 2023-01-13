@@ -14,7 +14,7 @@ namespace master.Infrastructure
     {
         public static void AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<OrderContext>(x => x.UseSqlite(@"Data Source=C:\db\orderingMaster.db"));
+            services.AddDbContext<OrderContext>(x => x.UseSqlite(@"Data Source=./Db/orderingMaster.db"));
         }
     }
 }

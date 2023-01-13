@@ -2,3 +2,38 @@
 <div *ngFor="let order of orders" >
     <p>{{ order.id}}</p>
 </div>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">id</th>
+			<th scope="col">customer name</th>
+			<th scope="col">number of products</th>
+
+			<th scope="col">product name</th>
+			<th scope="col">quantity</th>
+            <th scope="col">price</th>
+
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let order of orders; index as i">
+			<th scope="row">{{ i + 1 }}</th>
+			<td>
+                {{ order.id}}
+			</td>
+            <td>
+                {{ order.customer.name}}
+			</td>
+            <td>
+                {{ order.items.length}}
+			</td>
+            <td>
+                {{ order.items[0].product.name}}
+                {{ order.items[0].quantity}}
+                {{ order.items[0].product.price}}
+
+			</td>
+		</tr>
+	</tbody>
+</table>

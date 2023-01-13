@@ -46,12 +46,12 @@ public class Program
             app.UseSwaggerUI();
         }
 
-        
+        app.UseCors("MyPolicy");
+
 
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
-        app.UseCors("MyPolicy");
 
         app.MapControllers();
 

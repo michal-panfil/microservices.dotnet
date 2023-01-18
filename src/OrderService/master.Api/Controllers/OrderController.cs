@@ -28,17 +28,9 @@ namespace master.Api.Controllers
         [HttpPost]
         public IActionResult Post(OrderDto order)
         {
-            var orderEntity = new Order
-            {
-                CustomerId = order.CustomerId,
-                Items = order.Items.Select(x => new OrderItem
-                {
-                    ProductId = x.ProductId,
-                    Quantity = x.Quantity
-                }).ToList()
-            };
-            this.DbContext.Orders.Add(orderEntity);
-            this.DbContext.SaveChanges();
+            
+            //this.DbContext.Orders.Add(orderEntity);
+            //this.DbContext.SaveChanges();
             return Ok();
         }
     }

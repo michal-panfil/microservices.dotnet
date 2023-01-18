@@ -1,6 +1,6 @@
 <p>Order List</p>
-<div *ngFor="let order of orders" >
-    <p>{{ order.id}}</p>
+<div *ngFor="let order of orders">
+	<p>{{ order.id}}</p>
 </div>
 <table class="table table-striped">
 	<thead>
@@ -12,7 +12,7 @@
 
 			<th scope="col">product name</th>
 			<th scope="col">quantity</th>
-            <th scope="col">price</th>
+			<th scope="col">price</th>
 
 		</tr>
 	</thead>
@@ -20,19 +20,22 @@
 		<tr *ngFor="let order of orders; index as i">
 			<th scope="row">{{ i + 1 }}</th>
 			<td>
-                {{ order.id}}
+				{{ order.id}}
 			</td>
-            <td>
-                {{ order.customer.name}}
+			<td>
+				{{ order.customer.name}}
 			</td>
-            <td>
-                {{ order.items.length}}
+			<td>
+				{{ order.items.length}}
 			</td>
-            <td>
-                {{ order.items[0].product.name}}
-                {{ order.items[0].quantity}}
-                {{ order.items[0].product.price}}
-
+			<td>
+				{{ order.items[0].product.name}}
+			</td>
+			<td>
+				{{ order.items[0].quantity}}
+			</td>
+			<td>
+				{{ order.items[0].product.price}}
 			</td>
 		</tr>
 	</tbody>

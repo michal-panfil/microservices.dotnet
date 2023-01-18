@@ -8,7 +8,9 @@ namespace master.Core.Models.Dtos
 {
     public class OrderDto
     {
-        public List<OrderItemDto> Items { get; set; }
-        public int CustomerId { get; set; }
+        public string ClientName { get; set; }
+        public string ClientAddress { get; set; }
+        public int Quantity { get; set; }
+        public int ProductId { get; set; }
     }
 }

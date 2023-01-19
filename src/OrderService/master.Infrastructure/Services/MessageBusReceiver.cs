@@ -8,23 +8,30 @@ using System.Threading.Tasks;
 using master.Core.Interfaces;
 using master.Core.Models;
 using System.Text.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace master.Infrastructure.Services
 {
     public class MessageBusReceiver : IMessageBusReceiver
     {
+        private readonly IConfiguration configuration;
+
+        public MessageBusReceiver(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         public async Task ProcessMessages(CancellationToken stoppingToken)
         {
             Console.WriteLine("starting message receiver service");
             var factory = new ConnectionFactory()
             {
-                HostName = "rabbitmq",
-                UserName = "user",
-                Password = "password"
+                HostName = configuration["RabbitMq:HostName"],
+                UserName = configuration["RabbitMq:UserName"],
+                Password = configuration["RabbitMq:Password"],
             };
             var connection = factory.CreateConnection();
             var channel = connection.CreateModel();
-            channel.QueueDeclare(queue: "OrderUpdateStatus",
+            channel.QueueDeclare(queue: configuration["RabbitMq:StatusQueueName"],
                                  durable: false,
                                  exclusive: false,
                                  autoDelete: false,
@@ -45,11 +52,10 @@ namespace master.Infrastructure.Services
                 var updateMsg = System.Text.Json.JsonSerializer.Deserialize<UpdateOrderStatusMessage>(message, options);
                 Console.WriteLine(updateMsg.ToString());
             };
-            channel.BasicConsume(queue: "OrderUpdateStatus",
+            channel.BasicConsume(queue: configuration["RabbitMq:StatusQueueName"],
                                  autoAck: true,
                                  consumer: consumer);
 
-            //WaitHandle.WaitAny(new[] { stoppingToken.WaitHandle });
             await Task.CompletedTask;
 
         }

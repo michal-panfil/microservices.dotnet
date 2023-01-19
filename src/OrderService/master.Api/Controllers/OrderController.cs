@@ -22,15 +22,22 @@ namespace master.Api.Controllers
         [HttpGet]
         public List<Order> Get()
         {
-            return this.DbContext.Orders.Include(x => x.Items).ThenInclude(x => x.Product).Include(x => x.Customer).ToList();
+            return this.DbContext.Orders.Include(x => x.Product).ToList();
         }
 
         [HttpPost]
         public IActionResult Post(OrderDto order)
         {
-            
-            //this.DbContext.Orders.Add(orderEntity);
-            //this.DbContext.SaveChanges();
+
+            var newOrder = new Order
+            {
+                ClientName = order.ClientName,
+                ClientAddress = order.ClientAddress,
+                Quantity = order.Quantity,
+                ProductId = order.ProductId
+            };
+            this.DbContext.Orders.Add(newOrder);
+            // sent message
             return Ok();
         }
     }

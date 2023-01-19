@@ -1,0 +1,32 @@
+
+<div class="border border-primary p-2">
+
+<h3> create order </h3>
+<div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Select</label>
+    <select class="form-control" [(ngModel)]="product" id="exampleFormControlSelect1">
+      <option *ngFor="let product of products" [ngValue]="product">
+        {{product.name}}</option>
+
+    </select>
+    
+  </div>
+    <div class="col-auto">
+        <label class="sr-only" for="inlineFormInput">Quantity</label>
+        <input type="number" [(ngModel)]="quantity" class="form-control mb-2" id="inlineFormInput" placeholder="0">
+      </div>
+    <div class="col-auto">
+        <label class="sr-only" for="inlineFormInput">Name</label>
+        <input type="text" [(ngModel)]="clientName" class="form-control mb-2" id="clientName">
+      </div>
+      <div class="col-auto">
+        <label class="sr-only" for="inlineFormInput">Adress</label>
+        <input type="text" [(ngModel)]="clientAddress" class="form-control mb-2" id="inlineFormInput" placeholder="New York">
+      </div>
+    <div class="col-auto">
+        <button type="submit" (click)="submitOrder()" class="btn btn-primary mb-2">Submit</button>
+      </div>
+
+    </div>
+</div>

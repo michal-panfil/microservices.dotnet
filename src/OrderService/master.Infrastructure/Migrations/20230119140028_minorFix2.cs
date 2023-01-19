@@ -5,7 +5,7 @@
 namespace master.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class emptymigration : Migration
+    public partial class minorFix2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

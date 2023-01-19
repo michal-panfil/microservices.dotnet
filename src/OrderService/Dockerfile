@@ -4,7 +4,7 @@ WORKDIR /App
 # Copy everything
 COPY . .
 # Restore as distinct layers
-RUN dotnet restore ./master.Api
+RUN dotnet restore ./OrdersService.Api
 # Build and publish a release
 RUN dotnet publish -c Release -o out
 
@@ -12,4 +12,4 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /App
 COPY --from=build-env /App/out .
-ENTRYPOINT ["dotnet", "master.Api.dll"]
+ENTRYPOINT ["dotnet", "OrdersService.Api.dll"]

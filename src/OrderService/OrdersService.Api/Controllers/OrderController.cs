@@ -5,6 +5,7 @@ using OrdersService.Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OrdersService.Infrastructure.Services;
 
 namespace OrdersService.Api.Controllers
 {
@@ -12,17 +13,20 @@ namespace OrdersService.Api.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        public OrderController(OrderContext dbContext)
+        private readonly MessageBusSender<OrderDto> messageSender;
+        private readonly OrderContext dbContext;
+
+        public OrderController(OrderContext dbContext, MessageBusSender<OrderDto> messageSender)
         {
-            DbContext = dbContext;
+            this.dbContext = dbContext;
+            this.messageSender = messageSender;
         }
 
-        public OrderContext DbContext { get; }
 
         [HttpGet]
         public List<Order> Get()
         {
-            return this.DbContext.Orders.Include(x => x.Product).ToList();
+            return this.dbContext.Orders.Include(x => x.Product).ToList();
         }
 
         [HttpPost]
@@ -36,8 +40,9 @@ namespace OrdersService.Api.Controllers
                 Quantity = order.Quantity,
                 ProductId = order.ProductId
             };
-            this.DbContext.Orders.Add(newOrder);
+            this.dbContext.Orders.Add(newOrder);
             // sent message
+            this.messageSender.SendRabbitMqMessage(order);
             return Ok();
         }
     }

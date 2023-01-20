@@ -22,7 +22,8 @@ namespace OrdersService.Infrastructure.HostedServices
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await messageBusReceiver.ProcessMessages(stoppingToken);
+            messageBusReceiver.ProcessMessages(stoppingToken);
+            await Task.CompletedTask;
         }
 
     }

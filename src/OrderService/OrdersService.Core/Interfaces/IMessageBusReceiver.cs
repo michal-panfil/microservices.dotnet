@@ -8,6 +8,6 @@ namespace OrdersService.Core.Interfaces
 {
     public interface IMessageBusReceiver
     {
-        Task ProcessMessages(CancellationToken stoppingToken);
+        void ProcessMessages(CancellationToken stoppingToken);
     }
 }

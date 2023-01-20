@@ -1,10 +1,6 @@
 ﻿using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using OrdersService.Core.Interfaces;
 using OrdersService.Core.Models;
 using System.Text.Json;
@@ -20,7 +16,7 @@ namespace OrdersService.Infrastructure.Services
         {
             this.configuration = configuration;
         }
-        public async Task ProcessMessages(CancellationToken stoppingToken)
+        public void ProcessMessages(CancellationToken stoppingToken)
         {
             Console.WriteLine("starting message receiver service");
             var factory = new ConnectionFactory()
@@ -49,14 +45,13 @@ namespace OrdersService.Infrastructure.Services
                     Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
 
                 };
-                var updateMsg = System.Text.Json.JsonSerializer.Deserialize<UpdateOrderStatusMessage>(message, options);
+                var updateMsg = JsonSerializer.Deserialize<UpdateOrderStatusMessage>(message, options);
                 Console.WriteLine(updateMsg.ToString());
             };
             channel.BasicConsume(queue: configuration["RabbitMq:StatusQueueName"],
                                  autoAck: true,
                                  consumer: consumer);
 
-            await Task.CompletedTask;
 
         }
     }

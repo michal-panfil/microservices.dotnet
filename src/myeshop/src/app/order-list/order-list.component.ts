@@ -16,10 +16,10 @@ export class OrderListComponent implements OnInit {
  callWebApiForOrders() {
   console.log("lets call api");
 
-    // this.http.get<Order[]>('http://localhost:5001/api/order').subscribe(result => {
-    //   console.log(result);
-    //   this.orders = result;
-    // }, error => console.error(error));
+    this.http.get<Order[]>('http://localhost:5001/api/order',{headers:{"accept": "text/plain"}}).subscribe(result => {
+      console.log(result);
+      this.orders = result;
+    }, error => console.error(error));
   }
 }
 interface Order {

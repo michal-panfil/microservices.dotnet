@@ -1,20 +1,25 @@
 version: "3.9"
 services:
-  web:
+  orderservice:
     build: ./src/OrderService/.
     ports:
       - "5001:80"
     depends_on:
       "rabbitmq" :
         condition: service_healthy
-    volumes:
-      - dbfolder:/App/Db
+  warehouseservice:
+    build: ./src/WarehouseService/.
+    ports:
+      - "5005:80"
+    depends_on:
+      "rabbitmq" :
+        condition: service_healthy
   ui:
     build: ./src/myeshop/.
     ports:
       - "5002:80"
     depends_on:
-      - web
+      - orderservice
   rabbitmq:
     image: "rabbitmq:3-management"
     container_name: "rabbitmq"
@@ -35,14 +40,13 @@ services:
   order_mssql_db:
     image: "mcr.microsoft.com/mssql/server:2019-latest"
     container_name: "order_mssql_db"
-    hostname: "order_mssql_db"
-    labels:
-      NAME: "order_mssql_db"
     ports:
       - "1433:1433"
+    volumes:
+      - /var/opt/mssql
     environment:
     - ACCEPT_EULA=Y
-    - MSSQL_SA_PASSWORD=Password12345!
+    - SA_PASSWORD=S3cur3P@ssW0rd!
 volumes:
   dbfolder:
     external: true

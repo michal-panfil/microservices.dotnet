@@ -29,7 +29,7 @@ export class OrderCreatorComponent implements OnInit {
         quantity: this.quantity,
         productId: this.product.id
       };
-      this.http.post('https://localhost:7083/api/order', newOrder).subscribe();
+      this.http.post('http://localhost:5001/api/order', newOrder).subscribe();
 
     }
 }

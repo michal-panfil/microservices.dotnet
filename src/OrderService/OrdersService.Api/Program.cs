@@ -16,39 +16,49 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
-       // builder.Services.AddHostedService<MessageReceiverService>();
+        builder.Services.AddCors(o => o.AddPolicy("MyPolicy", policy =>
+        {
+            policy.AllowAnyOrigin()
+                   .AllowAnyHeader()
+                   .WithMethods("GET", "PUT", "POST", "DELETE", "OPTIONS");
 
+
+        }));
+        // Add services to the container.
+        // builder.Services.AddHostedService<MessageReceiverService>();
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddDatabase(builder.Configuration);
+        builder.Services.AddMessageBus(builder.Configuration);
         builder.Services.AddSingleton(() => new JsonSerializerOptions(JsonSerializerDefaults.Web)
         {
             Converters = { new JsonStringEnumConverter(), }
         });
 
-        builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+        builder.Services.AddCors(o => o.AddPolicy("MyPolicy", policy =>
         {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
+            policy.AllowAnyOrigin()
+                   .AllowAnyHeader()
+                   .WithMethods("GET", "PUT", "POST", "DELETE", "OPTIONS");
+
+
         }));
 
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+        app.UseSwagger();
+        app.UseSwaggerUI();
+        app.UseRouting();
 
-        app.UseCors("MyPolicy");
+        app.UseCors(builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 
 
-        app.UseHttpsRedirection();
 
         app.UseAuthorization();
 

@@ -29,7 +29,7 @@ export class OrderCreatorComponent implements OnInit {
       productId: this.product.id
     };
     this.http.post('http://localhost:5001/api/order', newOrder).subscribe();
-
+    this.clearForm();
   }
 
   callWebApiForProducts() {
@@ -38,7 +38,6 @@ export class OrderCreatorComponent implements OnInit {
     this.http.get<ProductDto[]>('http://localhost:5001/api/products', { headers: { "accept": "text/plain" } }).subscribe(result => {
       console.log(result);
       this.products = result;
-      this.clearForm();
     }, error => console.error(error));
   }
 

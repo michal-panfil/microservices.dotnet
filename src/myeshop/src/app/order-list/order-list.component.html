@@ -23,19 +23,16 @@
 				{{ order.id}}
 			</td>
 			<td>
-				{{ order.customer.name}}
+				{{ order.clientName}}
 			</td>
 			<td>
-				{{ order.items.length}}
+				{{ order.clientAddress}}
 			</td>
 			<td>
-				{{ order.items[0].product.name}}
+				{{ order.productName}}
 			</td>
 			<td>
-				{{ order.items[0].quantity}}
-			</td>
-			<td>
-				{{ order.items[0].product.price}}
+				{{ order.quantity}}
 			</td>
 		</tr>
 	</tbody>

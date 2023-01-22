@@ -24,9 +24,16 @@ namespace OrdersService.Api.Controllers
 
 
         [HttpGet]
-        public List<Order> Get()
+        public List<OrderDto> Get()
         {
-            return this.dbContext.Orders.Include(x => x.Product).ToList();
+            return this.dbContext.Orders.Include(x => x.Product).Select(p => new OrderDto{
+                Id = p.Id,
+                ClientName = p.ClientName,
+                ClientAddress = p.ClientAddress,
+                Quantity = p.Quantity,
+                ProductId = p.ProductId,
+                ProductName = string.IsNullOrEmpty(p.Product.Name) ? "undefined" : p.Product.Name
+            }).ToList();
         }
 
         [HttpPost]

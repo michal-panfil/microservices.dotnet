@@ -8,7 +8,7 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./order-list.component.scss']
 })
 export class OrderListComponent implements OnInit {
-  orders: Order[] = [];
+  orders: OrderDto[] = [];
   constructor(private http: HttpClient) { }
   ngOnInit(): void {
     this.callWebApiForOrders();
@@ -16,12 +16,21 @@ export class OrderListComponent implements OnInit {
  callWebApiForOrders() {
   console.log("lets call api");
 
-    this.http.get<Order[]>('http://localhost:5001/api/order',{headers:{"accept": "text/plain"}}).subscribe(result => {
+    this.http.get<OrderDto[]>('http://localhost:5001/api/order',{headers:{"accept": "text/plain"}}).subscribe(result => {
       console.log(result);
       this.orders = result;
     }, error => console.error(error));
   }
 }
+interface OrderDto{
+  id : number;
+  clientName : string;
+  clientAddress : string; 
+  quantity : number;
+  productId : number;
+  productName : string;
+}
+
 interface Order {
   id: number;
   customer : Customer;

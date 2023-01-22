@@ -11,7 +11,7 @@ namespace OrdersService.Infrastructure.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Order>().HasOne(x => x.Product).WithMany(x=> x.Orders).HasForeignKey(x => x.ProductId);
+            modelBuilder.Entity<Order>().HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId);
             modelBuilder.Entity<Product>().Property(x => x.Price).HasColumnType("decimal(18,2)");
 
         }

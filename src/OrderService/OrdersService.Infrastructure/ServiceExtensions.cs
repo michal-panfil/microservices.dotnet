@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using OrdersService.Core.Interfaces;
 using OrdersService.Infrastructure.Services;
 using OrdersService.Core.Models.Dtos;
+using Microsoft.AspNetCore.Builder;
+using OrdersService.Core.Models.Entities;
 
 namespace OrdersService.Infrastructure
 {
@@ -25,7 +27,19 @@ namespace OrdersService.Infrastructure
             services.AddTransient<IMessageBusReceiver, MessageBusReceiver>();
             services.AddTransient<MessageBusSender<OrderDto>>();
 
-
+        }
+        public static void MigrateDatabase(this IApplicationBuilder app)
+        {
+            using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            using var context = serviceScope.ServiceProvider.GetRequiredService<OrderContext>();
+            context.Database.Migrate();
+            if (!context.Products.Any())
+            {
+                context.Products.Add(new Product { Name = "Product 1", Price = 10 });
+                context.Products.Add(new Product { Name = "Product 2", Price = 20 });
+                context.Products.Add(new Product { Name = "Product 3", Price = 30 });
+                context.SaveChanges();
+            }
         }
     }
 }

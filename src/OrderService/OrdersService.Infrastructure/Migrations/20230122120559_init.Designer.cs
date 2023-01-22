@@ -12,8 +12,8 @@ using OrdersService.Infrastructure.Data;
 namespace OrdersService.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20230119135430_minorFix")]
-    partial class minorFix
+    [Migration("20230122120559_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,12 +82,17 @@ namespace OrdersService.Infrastructure.Migrations
             modelBuilder.Entity("OrdersService.Core.Models.Entities.Order", b =>
                 {
                     b.HasOne("OrdersService.Core.Models.Entities.Product", "Product")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("OrdersService.Core.Models.Entities.Product", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

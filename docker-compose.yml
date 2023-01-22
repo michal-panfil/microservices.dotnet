@@ -40,13 +40,14 @@ services:
   order_mssql_db:
     image: "mcr.microsoft.com/mssql/server:2019-latest"
     container_name: "order_mssql_db"
+    hostname: "order_mssql_db"
+    labels:
+      NAME: "order_mssql_db"
     ports:
       - "1433:1433"
-    volumes:
-      - /var/opt/mssql
     environment:
     - ACCEPT_EULA=Y
-    - SA_PASSWORD=S3cur3P@ssW0rd!
+    - MSSQL_SA_PASSWORD=Password12345!
 volumes:
   dbfolder:
     external: true

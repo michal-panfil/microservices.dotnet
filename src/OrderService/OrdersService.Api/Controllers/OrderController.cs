@@ -41,6 +41,7 @@ namespace OrdersService.Api.Controllers
                 ProductId = order.ProductId
             };
             this.dbContext.Orders.Add(newOrder);
+            this.dbContext.SaveChanges();
             // sent message
             this.messageSender.SendRabbitMqMessage(order);
             return Ok();

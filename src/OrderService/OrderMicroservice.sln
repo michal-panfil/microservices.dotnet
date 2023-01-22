@@ -9,10 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrdersService.Core", "Order
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrdersService.Infrastructure", "OrdersService.Infrastructure\OrdersService.Infrastructure.csproj", "{2C91DB21-55AF-4910-AF72-645112A95DB2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4E948AA3-754B-4ADB-B3F3-EFCA5F06CE1A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuntionalTests", "tests\FuntionalTests\FuntionalTests.csproj", "{BF60AE5F-1F0C-42F1-9C58-DDDAA9D70073}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,16 +27,10 @@ Global
 		{2C91DB21-55AF-4910-AF72-645112A95DB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C91DB21-55AF-4910-AF72-645112A95DB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C91DB21-55AF-4910-AF72-645112A95DB2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BF60AE5F-1F0C-42F1-9C58-DDDAA9D70073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF60AE5F-1F0C-42F1-9C58-DDDAA9D70073}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF60AE5F-1F0C-42F1-9C58-DDDAA9D70073}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF60AE5F-1F0C-42F1-9C58-DDDAA9D70073}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{BF60AE5F-1F0C-42F1-9C58-DDDAA9D70073} = {4E948AA3-754B-4ADB-B3F3-EFCA5F06CE1A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {469ABD6A-D254-428F-9E66-68FDB5BF7224}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { OrderDto } from '../models/orderDto';
 
 
 @Component({
@@ -21,36 +22,6 @@ export class OrderListComponent implements OnInit {
       this.orders = result;
     }, error => console.error(error));
   }
-}
-interface OrderDto{
-  id : number;
-  clientName : string;
-  clientAddress : string; 
-  quantity : number;
-  productId : number;
-  productName : string;
-}
 
-interface Order {
-  id: number;
-  customer : Customer;
-  items: OrderItem[];
 
-}
-
-interface Customer {
-  id: number;
-  name: string;
-  email: string;
-}
-interface OrderItem {
-  id: number;
-  quantity: number;
-  product: Product;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
 }

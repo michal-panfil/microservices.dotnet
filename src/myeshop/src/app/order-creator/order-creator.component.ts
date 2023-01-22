@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProductDto } from '../models/productDto';
 
 @Component({
   selector: 'app-order-creator',
@@ -14,24 +15,39 @@ export class OrderCreatorComponent implements OnInit {
   public clientName: string = "";
   public clientAddress: string = "";
   public quantity: number = 0;
-  public product: Product = {id: 0, name: ''};
-    constructor(private http: HttpClient) {
-      this.products.push({id: 1, name: 'Product 1'});
-      this.products.push({id: 2, name: 'Product 2'});
-      this.products.push({id: 3, name: 'Product 3'});
-     }
-    ngOnInit(): void {
-    }
-    public submitOrder() {
-      const newOrder: NewOrder = {
-        clientName: this.clientName,
-        clientAddress: this.clientAddress,
-        quantity: this.quantity,
-        productId: this.product.id
-      };
-      this.http.post('http://localhost:5001/api/order', newOrder).subscribe();
+  public product: Product = { id: 0, name: '' };
+  constructor(private http: HttpClient) {
+  }
+  ngOnInit(): void {
+    this.callWebApiForProducts();
+  }
+  public submitOrder() {
+    const newOrder: NewOrder = {
+      clientName: this.clientName,
+      clientAddress: this.clientAddress,
+      quantity: this.quantity,
+      productId: this.product.id
+    };
+    this.http.post('http://localhost:5001/api/order', newOrder).subscribe();
 
-    }
+  }
+
+  callWebApiForProducts() {
+    console.log("lets call api");
+
+    this.http.get<ProductDto[]>('http://localhost:5001/api/products', { headers: { "accept": "text/plain" } }).subscribe(result => {
+      console.log(result);
+      this.products = result;
+      this.clearForm();
+    }, error => console.error(error));
+  }
+
+  clearForm() {
+    this.clientName = "";
+    this.clientAddress = "";
+    this.quantity = 0;
+    this.product = { id: 0, name: '' };
+  }
 }
 
 interface Product {
@@ -39,7 +55,7 @@ interface Product {
   name: string;
 }
 
-interface NewOrder{
+interface NewOrder {
   clientName: string;
   clientAddress: string;
   quantity: number;

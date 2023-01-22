@@ -45,7 +45,7 @@ namespace OrdersService.Api.Controllers
                 ClientName = order.ClientName,
                 ClientAddress = order.ClientAddress,
                 Quantity = order.Quantity,
-                ProductId = order.ProductId
+                Product = this.dbContext.Products.Single(x => x.Id == order.ProductId),
             };
             this.dbContext.Orders.Add(newOrder);
             this.dbContext.SaveChanges();

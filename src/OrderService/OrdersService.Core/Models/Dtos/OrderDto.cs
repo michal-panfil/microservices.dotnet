@@ -13,6 +13,6 @@ namespace OrdersService.Core.Models.Dtos
         public string ClientAddress { get; set; }
         public int Quantity { get; set; }
         public int ProductId { get; set; }
-        public string ProductName { get; set; }
+        public string? ProductName { get; set; }
     }
 }

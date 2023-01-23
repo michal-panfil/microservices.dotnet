@@ -1,3 +1,5 @@
+using WarehouseService.Infrastructure;
+
 namespace WarehouseService.Worker
 {
     public class Program
@@ -7,7 +9,9 @@ namespace WarehouseService.Worker
             IHost host = Host.CreateDefaultBuilder(args)
                 .ConfigureServices(services =>
                 {
+                    var config = services.BuildServiceProvider().GetService<IConfiguration>();
                     services.AddHostedService<Worker>();
+                    services.AddDomainServices(config);
                 })
                 .Build();
 

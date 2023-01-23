@@ -2,6 +2,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 using WarehouseService.Core.Models;
+using WarehouseService.Core.Services;
 
 namespace WarehouseService.Worker
 {
@@ -9,12 +10,15 @@ namespace WarehouseService.Worker
     {
         private readonly ILogger<Worker> _logger;
         private readonly IConfiguration configuration;
+        private readonly NewOrderManager newOrderManager;
 
-        public Worker(ILogger<Worker> logger, IConfiguration configuration)
+        public Worker(ILogger<Worker> logger, IConfiguration configuration, NewOrderManager newOrderManager)
         {
             _logger = logger;
             this.configuration = configuration;
+            this.newOrderManager = newOrderManager;
         }
+
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -47,6 +51,8 @@ namespace WarehouseService.Worker
                 };
                 var updateMsg = System.Text.Json.JsonSerializer.Deserialize<OrderDto>(message, options);
                 Console.WriteLine(updateMsg.ToString());
+                this.newOrderManager.ProcessNewOrder(updateMsg);
+
             };
             channel.BasicConsume(queue: configuration["RabbitMq:Queues:OrderDto"],
                                  autoAck: true,

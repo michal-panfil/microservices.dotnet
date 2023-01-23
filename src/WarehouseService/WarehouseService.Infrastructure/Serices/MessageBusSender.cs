@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using WarehouseService.Core.Interfaces;
 
 namespace WarehouseService.Infrastructure.Serices
 {
-    public class MessageBusSender<T>
+    public class MessageBusSender<T> : IMessageBusSender<T>
     {
         private readonly IConfiguration configuration;
 
@@ -37,7 +38,7 @@ namespace WarehouseService.Infrastructure.Serices
                 var body = Encoding.UTF8.GetBytes(message);
 
                 channel.BasicPublish(exchange: "",
-                                     routingKey: "hello",
+                                     routingKey: configuration[$"RabbitMq:Queues:{typeof(T).Name}"],
                                      basicProperties: null,
                                      body: body);
                 Console.WriteLine(" [x] Sent {0}", order);

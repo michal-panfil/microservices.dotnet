@@ -5,4 +5,5 @@ export interface OrderDto{
     quantity : number;
     productId : number;
     productName : string;
+    status : string;
   }

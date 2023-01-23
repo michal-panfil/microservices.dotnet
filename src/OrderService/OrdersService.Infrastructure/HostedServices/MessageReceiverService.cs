@@ -9,14 +9,15 @@ using System.Text;
 using System.Threading.Tasks;
 using OrdersService.Core.Models;
 using OrdersService.Core.Interfaces;
+using OrdersService.Infrastructure.Models;
 
 namespace OrdersService.Infrastructure.HostedServices
 {
     public class MessageReceiverService : BackgroundService
     {
-        private readonly IMessageBusReceiver messageBusReceiver;
+        private readonly IMessageBusReceiver<UpdateStatusMessage> messageBusReceiver;
 
-        public MessageReceiverService(IMessageBusReceiver messageBusReceiver)
+        public MessageReceiverService(IMessageBusReceiver<UpdateStatusMessage> messageBusReceiver)
         {
             this.messageBusReceiver = messageBusReceiver;
         }

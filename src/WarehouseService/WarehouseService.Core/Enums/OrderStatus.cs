@@ -9,6 +9,7 @@ namespace WarehouseService.Core.Enums
     public enum OrderStatus
     {
         New,
+        InProcess,
         Paid,
         Sent,
         Cancelled,

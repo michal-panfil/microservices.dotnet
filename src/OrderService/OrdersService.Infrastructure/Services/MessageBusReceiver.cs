@@ -5,10 +5,11 @@ using OrdersService.Core.Interfaces;
 using OrdersService.Core.Models;
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
+using System.Text.Json.Serialization;
 
 namespace OrdersService.Infrastructure.Services
 {
-    public class MessageBusReceiver : IMessageBusReceiver
+    public class MessageBusReceiver<T> : IMessageBusReceiver<T>
     {
         private readonly IConfiguration configuration;
 
@@ -19,6 +20,7 @@ namespace OrdersService.Infrastructure.Services
         public void ProcessMessages(CancellationToken stoppingToken)
         {
             Console.WriteLine("starting message receiver service");
+            var queueName = configuration[$"RabbitMq:Queues:{typeof(T).Name}"];
             var factory = new ConnectionFactory()
             {
                 HostName = configuration["RabbitMq:HostName"],
@@ -27,7 +29,7 @@ namespace OrdersService.Infrastructure.Services
             };
             var connection = factory.CreateConnection();
             var channel = connection.CreateModel();
-            channel.QueueDeclare(queue: configuration["RabbitMq:StatusQueueName"],
+            channel.QueueDeclare(queue: queueName,
                                  durable: false,
                                  exclusive: false,
                                  autoDelete: false,
@@ -39,16 +41,16 @@ namespace OrdersService.Infrastructure.Services
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 Console.WriteLine(message);
-                var options = new System.Text.Json.JsonSerializerOptions()
+                var options = new JsonSerializerOptions()
                 {
                     PropertyNameCaseInsensitive = true,
-                    Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
+                    Converters = { new JsonStringEnumConverter() }
 
                 };
                 var updateMsg = JsonSerializer.Deserialize<UpdateOrderStatusMessage>(message, options);
                 Console.WriteLine(updateMsg.ToString());
             };
-            channel.BasicConsume(queue: configuration["RabbitMq:StatusQueueName"],
+            channel.BasicConsume(queue: queueName,
                                  autoAck: true,
                                  consumer: consumer);
 

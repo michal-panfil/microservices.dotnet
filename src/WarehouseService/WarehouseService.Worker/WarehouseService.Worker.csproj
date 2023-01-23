@@ -16,5 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WarehouseService.Core\WarehouseService.Core.csproj" />
+    <ProjectReference Include="..\WarehouseService.Infrastructure\WarehouseService.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

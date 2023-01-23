@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OrdersService.Core.Interfaces
 {
-    public interface IMessageBusReceiver
+    public interface IMessageBusReceiver<T>
     {
         void ProcessMessages(CancellationToken stoppingToken);
     }

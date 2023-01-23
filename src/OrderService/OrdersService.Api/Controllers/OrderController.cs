@@ -32,7 +32,9 @@ namespace OrdersService.Api.Controllers
                 ClientAddress = p.ClientAddress,
                 Quantity = p.Quantity,
                 ProductId = p.ProductId,
-                ProductName = string.IsNullOrEmpty(p.Product.Name) ? "undefined" : p.Product.Name
+                ProductName = string.IsNullOrEmpty(p.Product.Name) ? "undefined" : p.Product.Name,
+                Status = p.Status.ToString()
+
             }).ToList();
         }
 

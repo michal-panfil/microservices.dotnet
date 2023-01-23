@@ -12,6 +12,7 @@ using OrdersService.Infrastructure.Services;
 using OrdersService.Core.Models.Dtos;
 using Microsoft.AspNetCore.Builder;
 using OrdersService.Core.Models.Entities;
+using OrdersService.Infrastructure.Models;
 
 namespace OrdersService.Infrastructure
 {
@@ -24,7 +25,7 @@ namespace OrdersService.Infrastructure
 
         public static void AddMessageBus(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IMessageBusReceiver, MessageBusReceiver>();
+            services.AddTransient<IMessageBusReceiver<UpdateStatusMessage>, MessageBusReceiver<UpdateStatusMessage>>();
             services.AddTransient<MessageBusSender<OrderDto>>();
 
         }

@@ -8,10 +8,12 @@ namespace WarehouseService.Worker
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
+        private readonly IConfiguration configuration;
 
-        public Worker(ILogger<Worker> logger)
+        public Worker(ILogger<Worker> logger, IConfiguration configuration)
         {
             _logger = logger;
+            this.configuration = configuration;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -19,13 +21,13 @@ namespace WarehouseService.Worker
             Console.WriteLine("starting message receiver service");
             var factory = new ConnectionFactory()
             {
-                HostName = "rabbitmq",
-                UserName = "user",
-                Password = "password"
+                HostName = configuration["RabbitMq:HostName"],
+                UserName = configuration["RabbitMq:UserName"],
+                Password = configuration["RabbitMq:Password"],
             };
             var connection = factory.CreateConnection();
             var channel = connection.CreateModel();
-            channel.QueueDeclare(queue: "NewOrderMessage",
+            channel.QueueDeclare(queue: configuration["RabbitMq:Queues:OrderDto"],
                                  durable: false,
                                  exclusive: false,
                                  autoDelete: false,
@@ -43,10 +45,10 @@ namespace WarehouseService.Worker
                     Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
 
                 };
-                var updateMsg = System.Text.Json.JsonSerializer.Deserialize<Order>(message, options);
+                var updateMsg = System.Text.Json.JsonSerializer.Deserialize<OrderDto>(message, options);
                 Console.WriteLine(updateMsg.ToString());
             };
-            channel.BasicConsume(queue: "NewOrderMessage",
+            channel.BasicConsume(queue: configuration["RabbitMq:Queues:OrderDto"],
                                  autoAck: true,
                                  consumer: consumer);
 

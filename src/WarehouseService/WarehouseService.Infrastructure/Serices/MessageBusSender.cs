@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using OrdersService.Core.Models.Dtos;
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace OrdersService.Infrastructure.Services
+namespace WarehouseService.Infrastructure.Serices
 {
     public class MessageBusSender<T>
     {
@@ -20,7 +19,8 @@ namespace OrdersService.Infrastructure.Services
         }
         public void SendRabbitMqMessage(T order)
         {
-            var factory = new ConnectionFactory() {
+            var factory = new ConnectionFactory()
+            {
                 HostName = configuration["RabbitMq:HostName"],
                 UserName = configuration["RabbitMq:UserName"],
                 Password = configuration["RabbitMq:Password"],
@@ -37,7 +37,7 @@ namespace OrdersService.Infrastructure.Services
                 var body = Encoding.UTF8.GetBytes(message);
 
                 channel.BasicPublish(exchange: "",
-                                     routingKey: configuration[$"RabbitMq:Queues:{typeof(T).Name}"],
+                                     routingKey: "hello",
                                      basicProperties: null,
                                      body: body);
                 Console.WriteLine(" [x] Sent {0}", order);

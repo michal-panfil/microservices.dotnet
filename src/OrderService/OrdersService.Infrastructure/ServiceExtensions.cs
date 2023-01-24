@@ -27,7 +27,11 @@ namespace OrdersService.Infrastructure
         {
             services.AddTransient<IMessageBusReceiver<UpdateStatusMessage>, MessageBusReceiver<UpdateStatusMessage>>();
             services.AddTransient<MessageBusSender<OrderDto>>();
+        }
 
+        public static void AddDataServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddScoped<OrderDataService>();
         }
         public static void MigrateDatabase(this IApplicationBuilder app)
         {

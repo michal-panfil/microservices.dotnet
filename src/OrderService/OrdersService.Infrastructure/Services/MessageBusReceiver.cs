@@ -12,10 +12,12 @@ namespace OrdersService.Infrastructure.Services
     public class MessageBusReceiver<T> : IMessageBusReceiver<T>
     {
         private readonly IConfiguration configuration;
+        private readonly OrderDataService orderService;
 
-        public MessageBusReceiver(IConfiguration configuration)
+        public MessageBusReceiver(IConfiguration configuration, OrderDataService orderService)
         {
             this.configuration = configuration;
+            this.orderService = orderService;
         }
         public void ProcessMessages(CancellationToken stoppingToken)
         {
@@ -48,6 +50,7 @@ namespace OrdersService.Infrastructure.Services
 
                 };
                 var updateMsg = JsonSerializer.Deserialize<UpdateOrderStatusMessage>(message, options);
+                this.orderService.UpdataOrderStatus(updateMsg.OrderId, updateMsg.Status);
                 Console.WriteLine(updateMsg.ToString());
             };
             channel.BasicConsume(queue: queueName,

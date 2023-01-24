@@ -52,6 +52,7 @@ namespace OrdersService.Api.Controllers
             this.dbContext.Orders.Add(newOrder);
             this.dbContext.SaveChanges();
             // sent message
+            order.Id = newOrder.Id;
             this.messageSender.SendRabbitMqMessage(order);
             return Ok();
         }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -11,6 +11,8 @@ import { ProductDto } from '../models/productDto';
   styleUrls: ['./order-creator.component.scss']
 })
 export class OrderCreatorComponent implements OnInit {
+  @Output() emitter:EventEmitter<string>
+  = new EventEmitter<string>();
   products: Product[] = [];
   public clientName: string = "";
   public clientAddress: string = "";
@@ -28,7 +30,13 @@ export class OrderCreatorComponent implements OnInit {
       quantity: this.quantity,
       productId: this.product.id
     };
-    this.http.post('http://localhost:5001/api/order', newOrder).subscribe();
+    this.http.post('http://localhost:5001/api/order', newOrder)
+    .subscribe(
+      (val) => {
+        console.log("POST call successful value returned in body", val);
+        this.emitter.emit("Order created:" + Date.now());
+      }
+    );
     this.clearForm();
   }
 

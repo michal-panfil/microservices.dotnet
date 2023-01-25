@@ -23,6 +23,7 @@ namespace WarehouseService.Core.Services
         {
             // do some processing
             // send message to message bus
+            Task.Delay(1000);
             meassageSender.SendRabbitMqMessage(new UpdateStatusMessage()
             {
                 OrderId = order.Id,

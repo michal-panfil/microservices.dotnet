@@ -9,12 +9,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OrderCreatorComponent } from './order-creator/order-creator.component';
 import { FormsModule } from '@angular/forms'; 
 import { ReactiveFormsModule } from '@angular/forms';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OrderListComponent,
-    OrderCreatorComponent
+    OrderCreatorComponent,
+    OrderDetailsComponent
   ],
   imports: [
     BrowserModule,

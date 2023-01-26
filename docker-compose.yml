@@ -48,6 +48,17 @@ services:
     environment:
     - ACCEPT_EULA=Y
     - MSSQL_SA_PASSWORD=Password12345!
+  warehouse_mssql_db:
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    container_name: "warehouse_mssql_db"
+    hostname: "warehouse_mssql_db"
+    labels:
+      NAME: " warehouse_mssql_db"
+    ports:
+      - "1453:1433"
+    environment:
+    - ACCEPT_EULA=Y
+    - MSSQL_SA_PASSWORD=Password12345!  
 volumes:
   dbfolder:
     external: true

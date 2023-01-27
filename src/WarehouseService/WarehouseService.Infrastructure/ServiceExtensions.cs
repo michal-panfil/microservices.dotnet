@@ -21,14 +21,15 @@ namespace WarehouseService.Infrastructure
     {
         public static void AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<WarehouseContext>(x => x.UseSqlServer("Server=warehouse_mssql_db,1453;Database=OrderDb;User Id=SA;Password=Password12345!;TrustServerCertificate=True;Encrypt=False"));
+            services.AddDbContext<WarehouseContext>(x => x.UseSqlServer("Server=warehouse_mssql_db,1433;Database=WarehouseDb;User Id=SA;Password=Password12345!;TrustServerCertificate=True;Encrypt=False"));
         }
         
         public static void AddDomainServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<NewOrderManager>();
             services.AddTransient<IMessageBusSender<UpdateStatusMessage>, MessageBusSender<UpdateStatusMessage>>();
-            
+            services.AddTransient<IShipmentDataManager, ShipmentDataManager>();
+
         }
         public static void MigrateDatabase(this IHost host)
         {

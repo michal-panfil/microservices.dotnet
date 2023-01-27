@@ -14,6 +14,8 @@ services:
     depends_on:
       "rabbitmq" :
         condition: service_healthy
+      "warehouse_mssql_db":
+        condition: service_started
   ui:
     build: ./src/myeshop/.
     ports:
@@ -53,9 +55,9 @@ services:
     container_name: "warehouse_mssql_db"
     hostname: "warehouse_mssql_db"
     labels:
-      NAME: " warehouse_mssql_db"
+      NAME: "warehouse_mssql_db"
     ports:
-      - "1453:1433"
+    - "1453:1433"
     environment:
     - ACCEPT_EULA=Y
     - MSSQL_SA_PASSWORD=Password12345!  

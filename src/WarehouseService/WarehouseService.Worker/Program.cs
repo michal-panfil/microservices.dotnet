@@ -10,12 +10,12 @@ namespace WarehouseService.Worker
                 .ConfigureServices(services =>
                 {
                     var config = services.BuildServiceProvider().GetService<IConfiguration>();
-                    services.AddHostedService<Worker>();
                     services.AddDatabase(config);
                     services.AddDomainServices(config);
+                    services.AddHostedService<Worker>();
                 })
                 .Build();
-            host.MigrateDatabase();
+            //host.MigrateDatabase();
             host.Run();
         }
     }

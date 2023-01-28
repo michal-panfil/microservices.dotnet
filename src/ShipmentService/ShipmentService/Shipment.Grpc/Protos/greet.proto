@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option csharp_namespace = "Shipment.Grpc";
+
+package greet;
+
+// The greeting service definition.
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply);
+  rpc GetKMToTarget (ShipmentRequest) returns (ShipmentReply);
+}
+
+// The request message containing the user's name.
+message ShipmentRequest {
+  int shipmentId = 1;
+  int initialKM = 2;	
+}
+
+message ShipmentReply {
+  int shipmentId = 1;
+  int remainingKm = 2;
+  string currentLocation = 3;
+}
+
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings.
+message HelloReply {
+  string message = 1;
+}

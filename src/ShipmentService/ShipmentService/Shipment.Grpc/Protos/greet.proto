@@ -13,13 +13,13 @@ service Greeter {
 
 // The request message containing the user's name.
 message ShipmentRequest {
-  int shipmentId = 1;
-  int initialKM = 2;	
+  sint32 shipmentId = 1;
+  sint32 initialKM = 2;	
 }
 
 message ShipmentReply {
-  int shipmentId = 1;
-  int remainingKm = 2;
+  sint32 shipmentId = 1;
+  sint32 remainingKm = 2;
   string currentLocation = 3;
 }
 

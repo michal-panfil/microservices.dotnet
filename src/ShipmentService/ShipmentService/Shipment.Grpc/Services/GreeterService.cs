@@ -18,5 +18,17 @@ namespace Shipment.Grpc.Services
                 Message = "Hello " + request.Name
             });
         }
+        public override Task<ShipmentReply> GetKMToTarget(ShipmentRequest request, ServerCallContext context)
+        {
+            Task.Delay(1000).Wait();
+            return Task.FromResult(new ShipmentReply()
+            {
+                ShipmentId = request.ShipmentId,
+                RemainingKm = request.InitialKM - 10 >= 0 ? request.InitialKM - 10 : 0,
+                CurrentLocation = "Poland"
+            });
+                
+        }
+        
     }
 }

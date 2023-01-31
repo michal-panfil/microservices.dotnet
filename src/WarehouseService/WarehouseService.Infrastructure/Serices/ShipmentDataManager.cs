@@ -18,7 +18,7 @@ namespace WarehouseService.Infrastructure.Serices
         {
             this.serviceScopeFactory = serviceScopeFactory;
         }
-        public void AddShipment(Shipment shipment)
+        public void AddShipment(WarehouseService.Core.Models.Shipment shipment)
         {
             using var scope = this.serviceScopeFactory.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<WarehouseContext>();

@@ -6,7 +6,9 @@ namespace Shipment.Grpc.Services
     public class GreeterService : Greeter.GreeterBase
     {
         private readonly ILogger<GreeterService> _logger;
-        public GreeterService(ILogger<GreeterService> logger)
+
+        private string[] Cities = new string[] { "Warszawa", "Poznañ", "Berlin", "Pary¿", "Lyon", "Marsylia", "Montpellier", "Tuluza" };
+    public GreeterService(ILogger<GreeterService> logger)
         {
             _logger = logger;
         }
@@ -18,15 +20,22 @@ namespace Shipment.Grpc.Services
                 Message = "Hello " + request.Name
             });
         }
-        public override Task<ShipmentReply> GetKMToTarget(ShipmentRequest request, ServerCallContext context)
+        public override async Task GetKMToTarget(ShipmentRequest request, IServerStreamWriter<ShipmentReply> responseStream, ServerCallContext context)
         {
-            Task.Delay(1000).Wait();
-            return Task.FromResult(new ShipmentReply()
+            var currentKM = request.InitialKM;
+            while (!context.CancellationToken.IsCancellationRequested && currentKM > 0)
             {
-                ShipmentId = request.ShipmentId,
-                RemainingKm = request.InitialKM - 10 >= 0 ? request.InitialKM - 10 : 0,
-                CurrentLocation = "Poland"
-            });
+                Thread.Sleep(100);
+                currentKM -= 10;
+
+                await responseStream.WriteAsync(new ShipmentReply
+                {
+                    ShipmentId = request.ShipmentId,
+                    RemainingKm = currentKM,
+                    CurrentLocation = Cities[currentKM / 100]
+                });
+            }
+
                 
         }
         

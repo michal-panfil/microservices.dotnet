@@ -18,6 +18,6 @@ namespace WarehouseService.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         }
-        public DbSet<Shipment> Shipments { get; set; }
+        public DbSet<WarehouseService.Core.Models.Shipment> Shipments { get; set; }
     }
 }

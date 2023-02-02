@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as signalR from "@microsoft/signalr"
+import { ShipmentUpdate } from './ShipmentUpdate';
 @Injectable({
   providedIn: 'root'
 })
@@ -28,8 +29,4 @@ export class SignalrService {
     }
 }
 
-export interface ShipmentUpdate {
-  shipmentId: number;
-  remainingKm: number;
-  currentLocation: string;
-}
+

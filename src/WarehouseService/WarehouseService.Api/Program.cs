@@ -1,5 +1,5 @@
-using WarehouseService.Api.Hubs;
 using WarehouseService.Infrastructure;
+using WarehouseService.Infrastructure.Hubs;
 
 namespace WarehouseService.Api
 {

@@ -6,6 +6,7 @@ import { ShipmentUpdate } from './ShipmentUpdate';
 })
 export class SignalrService {
   public shipmentId: number = 0;
+  public $shipmentUpdatedState: Subject<ShipmentUpdate> = new Subject<ShipmentUpdate>();
   public shipmentUpdate: ShipmentUpdate = { shipmentId: 0, remainingKm: 0, currentLocation: '' };
   private hubConnection: signalR.HubConnection;
     
@@ -25,6 +26,7 @@ export class SignalrService {
     public addShipmentStatusListener = () => {
       this.hubConnection.on('shipmentstatus', (data) => {
         this.shipmentUpdate = data;
+        this.$shipmentUpdatedState.next(this.shipmentUpdate);
       })
     }
 }

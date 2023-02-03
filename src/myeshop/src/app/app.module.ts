@@ -26,7 +26,7 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [SignalrService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,10 +11,14 @@ namespace WarehouseService.Api.Controllers
     {
         private readonly WarehouseContext context;
 
-        public ShipmentInfo(WarehouseContext context)
+        public ShipmentInfo(WarehouseContext context, ShipmentClient shipmentClient)
         {
             this.context = context;
+            ShipmentClient = shipmentClient;
         }
+
+        public ShipmentClient ShipmentClient { get; }
+
         [HttpGet("{id:int}")]
         public async Task Get(int id)
         {
@@ -24,8 +28,7 @@ namespace WarehouseService.Api.Controllers
                 this.Response.StatusCode = StatusCodes.Status404NotFound;
                 return;
             }
-            var service = new ShipmentClient();
-            await service.GetShipmentInfo(new Core.Models.Shipment { OrderId = id, KmToTarget= shipment.KmToTarget });
+            await this.ShipmentClient.GetShipmentInfo(new Core.Models.Shipment { OrderId = id, KmToTarget= shipment.KmToTarget });
 
         }
     }

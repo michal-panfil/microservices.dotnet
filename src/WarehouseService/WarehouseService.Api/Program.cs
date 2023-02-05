@@ -13,6 +13,7 @@ namespace WarehouseService.Api
             builder.Services.AddDatabase(builder.Configuration);
             builder.Services.AddControllers();
             builder.Services.AddSignalR();
+            builder.Services.AddDomainServices(builder.Configuration);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -20,16 +21,14 @@ namespace WarehouseService.Api
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-            }
 
             app.UseCors(builder => builder
-                .AllowAnyOrigin()
+                .WithOrigins("http://localhost:4200")
                 .AllowAnyMethod()
-                .AllowAnyHeader());
+                .AllowAnyHeader()
+                .AllowCredentials());
 
 
             app.MapControllers();

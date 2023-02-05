@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as signalR from "@microsoft/signalr"
-import { ShipmentUpdate } from './ShipmentUpdate';
+import { Subject } from 'rxjs/internal/Subject';
+import { ShipmentUpdate } from './shipmentUpdate';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +13,7 @@ export class SignalrService {
     
     constructor() { 
         this.hubConnection = new signalR.HubConnectionBuilder()
-                              .withUrl('https://localhost:5001/shipmentHub')
+                              .withUrl('http://localhost:5166/shipmentHub')
                               .build();
     }
   
@@ -24,7 +25,8 @@ export class SignalrService {
     }
    
     public addShipmentStatusListener = () => {
-      this.hubConnection.on('shipmentstatus', (data) => {
+      this.hubConnection.on('newshipmentlocation', (data) => {
+        console.log(data);
         this.shipmentUpdate = data;
         this.$shipmentUpdatedState.next(this.shipmentUpdate);
       })

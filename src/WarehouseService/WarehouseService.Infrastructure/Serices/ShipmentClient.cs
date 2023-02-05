@@ -33,7 +33,7 @@ namespace WarehouseService.Infrastructure.Serices
                 await foreach (var shipmentReply in streamingCall.ResponseStream.ReadAllAsync(cancellationToken: cts.Token))
                 {
                     Console.WriteLine($"{shipmentReply.ShipmentId} | {shipmentReply.RemainingKm} | {shipmentReply.CurrentLocation}");
-                    await this.hub.Clients.All.SendAsync("new shipment location", new ShipmentDto { ShipmentId = shipmentReply.ShipmentId, RemainingKm = shipmentReply.RemainingKm, CurrentLocation = shipmentReply.CurrentLocation }); ;
+                    await this.hub.Clients.All.SendAsync("newshipmentlocation", new ShipmentDto { ShipmentId = shipmentReply.ShipmentId, RemainingKm = shipmentReply.RemainingKm, CurrentLocation = shipmentReply.CurrentLocation }); ;
                 }
             }
             catch (RpcException ex) when (ex.StatusCode == StatusCode.Cancelled)

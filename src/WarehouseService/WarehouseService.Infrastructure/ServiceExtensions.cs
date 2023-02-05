@@ -29,6 +29,7 @@ namespace WarehouseService.Infrastructure
             services.AddTransient<NewOrderManager>();
             services.AddTransient<IMessageBusSender<UpdateStatusMessage>, MessageBusSender<UpdateStatusMessage>>();
             services.AddTransient<IShipmentDataManager, ShipmentDataManager>();
+            services.AddSingleton<ShipmentClient>();
 
         }
         public static void MigrateDatabase(this IHost host)

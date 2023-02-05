@@ -22,13 +22,16 @@ namespace WarehouseService.Api.Controllers
         [HttpGet("{id:int}")]
         public async Task Get(int id)
         {
-            var shipment = this.context.Shipments.FirstOrDefault(s => s.Id == id);
-            if (shipment == null)
-            {
-                this.Response.StatusCode = StatusCodes.Status404NotFound;
-                return;
-            }
-            await this.ShipmentClient.GetShipmentInfo(new Core.Models.Shipment { OrderId = id, KmToTarget= shipment.KmToTarget });
+            //var shipment = this.context.Shipments.FirstOrDefault(s => s.Id == id);
+            //if (shipment == null)
+            //{
+            //    this.Response.StatusCode = StatusCodes.Status404NotFound;
+            //    return;
+            //}
+            // var shipment = new Core.Models.Shipment { OrderId = id, KmToTarget = shipment.KmToTarget }
+            var shipment = new Core.Models.Shipment { OrderId = 101, KmToTarget = 600 };
+
+            await this.ShipmentClient.GetShipmentInfo(shipment);
 
         }
     }

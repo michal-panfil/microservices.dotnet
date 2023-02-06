@@ -29,9 +29,10 @@ namespace WarehouseService.Api.Controllers
             //    return;
             //}
             // var shipment = new Core.Models.Shipment { OrderId = id, KmToTarget = shipment.KmToTarget }
-            var shipment = new Core.Models.Shipment { OrderId = 101, KmToTarget = 600 };
+            var shipment = new Core.Models.Shipment { OrderId = id, KmToTarget = 600 };
 
-            await this.ShipmentClient.GetShipmentInfo(shipment);
+            this.ShipmentClient.GetShipmentInfo(shipment);
+            await Task.CompletedTask;
 
         }
     }

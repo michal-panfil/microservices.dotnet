@@ -25,7 +25,7 @@ namespace WarehouseService.Infrastructure.Serices
             using var channel = GrpcChannel.ForAddress("http://localhost:5132");
             var client = new Shipment.Grpc.Greeter.GreeterClient(channel);
 
-            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            var cts = new CancellationTokenSource(TimeSpan.FromSeconds(100));
             using var streamingCall = client.GetKMToTarget(new Shipment.Grpc.ShipmentRequest { ShipmentId = shipment.OrderId , InitialKM = 600}, cancellationToken: cts.Token);
 
             try

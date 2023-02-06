@@ -9,17 +9,24 @@ import { ShipmentUpdate } from '../services/shipmentUpdate';
 })
 export class OrderDetailsComponent implements OnInit {
 
-  public ordarDetails : ShipmentUpdate;
+  public ordarDetails: ShipmentUpdate[] = [];
 
 
   constructor(private signalrService: SignalrService) {
-    this.ordarDetails = { shipmentId: 0, remainingKm: 0, currentLocation: '' };
   }
-    ngOnInit(): void {
-this.signalrService.startConnection();
-this.signalrService.addShipmentStatusListener();
-this.signalrService.$shipmentUpdatedState.subscribe((data) => {
-  this.ordarDetails = data;
-});
-    }
+  ngOnInit(): void {
+    this.signalrService.startConnection();
+    this.signalrService.addShipmentStatusListener();
+    this.signalrService.$shipmentUpdatedState.subscribe((data) => {
+      var editedOrder = this.ordarDetails.find(order => {
+        return order.shipmentId == data.shipmentId;
+      });
+      if (editedOrder) {
+        editedOrder.currentLocation = data.currentLocation;
+        editedOrder.remainingKm = data.remainingKm;
+      } else {
+        this.ordarDetails.push(data);
+      }
+    });
+  }
 }

@@ -1,4 +1,20 @@
 <h3>Order details:</h3>
-<p>{{ ordarDetails.shipmentId }}</p>
-<p>{{ ordarDetails.remainingKm }}</p>
-<p>{{ ordarDetails.currentLocation }}</p>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">shipment id</th>
+			<th scope="col">reminding km</th>
+			<th scope="col">current loacation</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let detail of ordarDetails; index as i">
+			<th scope="row">{{ i + 1 }}</th>
+			<td> {{ detail.shipmentId }}</td>
+			<td>{{ detail.remainingKm }}</td>
+			<td>{{ detail.currentLocation }}</td>
+		</tr>
+	</tbody>
+</table>

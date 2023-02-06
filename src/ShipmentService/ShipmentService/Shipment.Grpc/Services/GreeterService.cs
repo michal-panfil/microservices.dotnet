@@ -25,7 +25,7 @@ namespace Shipment.Grpc.Services
             var currentKM = request.InitialKM;
             while (!context.CancellationToken.IsCancellationRequested && currentKM > 0)
             {
-                Thread.Sleep(100);
+                Thread.Sleep(300);
                 currentKM -= 10;
 
                 await responseStream.WriteAsync(new ShipmentReply

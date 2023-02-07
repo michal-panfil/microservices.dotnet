@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WarehouseService.Core.Interfaces;
 using WarehouseService.Infrastructure.Data;
 using WarehouseService.Infrastructure.Serices;
 
@@ -11,27 +12,25 @@ namespace WarehouseService.Api.Controllers
     {
         private readonly WarehouseContext context;
 
-        public ShipmentInfo(WarehouseContext context, ShipmentClient shipmentClient)
+        public ShipmentInfo(WarehouseContext context, IShipmentClient shipmentClient)
         {
             this.context = context;
             ShipmentClient = shipmentClient;
         }
 
-        public ShipmentClient ShipmentClient { get; }
+        public IShipmentClient ShipmentClient { get; }
 
         [HttpGet("{id:int}")]
         public async Task Get(int id)
         {
-            //var shipment = this.context.Shipments.FirstOrDefault(s => s.Id == id);
-            //if (shipment == null)
-            //{
-            //    this.Response.StatusCode = StatusCodes.Status404NotFound;
-            //    return;
-            //}
-            // var shipment = new Core.Models.Shipment { OrderId = id, KmToTarget = shipment.KmToTarget }
-            var shipment = new Core.Models.Shipment { OrderId = id, KmToTarget = 600 };
+            var shipment = this.context.Shipments.FirstOrDefault(s => s.Id == id);
+            if (shipment == null)
+            {
+                this.Response.StatusCode = StatusCodes.Status404NotFound;
+                return;
+            }
 
-            this.ShipmentClient.GetShipmentInfo(shipment);
+            _ = ShipmentClient.GetShipmentInfo(shipment);
             await Task.CompletedTask;
 
         }

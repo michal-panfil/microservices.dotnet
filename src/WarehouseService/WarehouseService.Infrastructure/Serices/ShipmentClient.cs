@@ -7,12 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WarehouseService.Core.Interfaces;
 using WarehouseService.Core.Models;
 using WarehouseService.Infrastructure.Hubs;
 
 namespace WarehouseService.Infrastructure.Serices
 {
-    public class ShipmentClient
+    public class ShipmentClient: IShipmentClient
     {
         private readonly IHubContext<ShipmentHub> hub;
 
@@ -22,7 +23,7 @@ namespace WarehouseService.Infrastructure.Serices
         }
         public async Task GetShipmentInfo(WarehouseService.Core.Models.Shipment shipment)
         {
-            using var channel = GrpcChannel.ForAddress("http://localhost:5132");
+            using var channel = GrpcChannel.ForAddress("http://shipmentgrpc:5007");
             var client = new Shipment.Grpc.Greeter.GreeterClient(channel);
 
             var cts = new CancellationTokenSource(TimeSpan.FromSeconds(100));

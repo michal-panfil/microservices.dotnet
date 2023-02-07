@@ -29,13 +29,17 @@ namespace WarehouseService.Infrastructure
             services.AddTransient<NewOrderManager>();
             services.AddTransient<IMessageBusSender<UpdateStatusMessage>, MessageBusSender<UpdateStatusMessage>>();
             services.AddTransient<IShipmentDataManager, ShipmentDataManager>();
-            services.AddSingleton<ShipmentClient>();
 
         }
-        public static void MigrateDatabase(this IHost host)
+        public static void AddSignalRServices(this IServiceCollection services, IConfiguration configuration)
         {
-            using var serviceScope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            services.AddSingleton<IShipmentClient, ShipmentClient>();
+        }
+        public static void MigrateDatabase(this IServiceCollection sercvices)
+        {
+            using var serviceScope = sercvices.BuildServiceProvider().GetRequiredService<IServiceScopeFactory>().CreateScope();
             using var context = serviceScope.ServiceProvider.GetRequiredService<WarehouseContext>();
+            context.Database.EnsureCreated();
             context.Database.Migrate();
         }
     }

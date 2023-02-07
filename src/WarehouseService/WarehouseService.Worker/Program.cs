@@ -1,4 +1,5 @@
 using WarehouseService.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WarehouseService.Worker
 {
@@ -11,6 +12,9 @@ namespace WarehouseService.Worker
                 {
                     var config = services.BuildServiceProvider().GetService<IConfiguration>();
                     services.AddDatabase(config);
+                    services.MigrateDatabase();
+                    services.AddHttpClient();
+
                     services.AddDomainServices(config);
                     services.AddHostedService<Worker>();
                 })

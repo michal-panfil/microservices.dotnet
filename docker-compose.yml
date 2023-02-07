@@ -16,6 +16,19 @@ services:
         condition: service_healthy
       "warehouse_mssql_db":
         condition: service_started
+  warehousapi:
+    build: 
+      context: ./src/WarehouseService/.
+      dockerfile: ApiDockerfile
+    ports:
+      - "5006:80"
+    depends_on:
+      "warehouse_mssql_db":
+        condition: service_started
+  shipmentgrpc:
+    build: ./src/ShipmentService/.
+    ports:
+      - "5007:80"
   ui:
     build: ./src/myeshop/.
     ports:

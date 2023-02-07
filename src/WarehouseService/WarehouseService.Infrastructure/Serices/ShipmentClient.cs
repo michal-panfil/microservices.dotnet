@@ -23,7 +23,7 @@ namespace WarehouseService.Infrastructure.Serices
         }
         public async Task GetShipmentInfo(WarehouseService.Core.Models.Shipment shipment)
         {
-            using var channel = GrpcChannel.ForAddress("http://shipmentgrpc:5007");
+            using var channel = GrpcChannel.ForAddress("http://shipmentgrpc:80");
             var client = new Shipment.Grpc.Greeter.GreeterClient(channel);
 
             var cts = new CancellationTokenSource(TimeSpan.FromSeconds(100));

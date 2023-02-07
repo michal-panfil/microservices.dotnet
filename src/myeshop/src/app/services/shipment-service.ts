@@ -26,6 +26,7 @@ export class SignalrService {
    
     public addShipmentStatusListener = () => {
       this.hubConnection.on('newshipmentlocation', (data) => {
+        console.log("receiving websocket data");
         console.log(data);
         this.shipmentUpdate = data;
         this.$shipmentUpdatedState.next(this.shipmentUpdate);

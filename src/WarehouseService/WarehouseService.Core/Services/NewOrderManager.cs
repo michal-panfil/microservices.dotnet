@@ -41,6 +41,7 @@ namespace WarehouseService.Core.Services
 
 
             this.shipmentDataManager.AddShipment(shipment);
+            
             this.meassageSender.SendRabbitMqMessage(new UpdateStatusMessage()
             {
                 OrderId = order.Id,

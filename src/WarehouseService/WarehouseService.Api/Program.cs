@@ -30,7 +30,7 @@ namespace WarehouseService.Api
                 app.UseSwaggerUI();
 
             app.UseCors(builder => builder
-                .WithOrigins("http://localhost:4200")
+                .WithOrigins("http://localhost:5002")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());

@@ -30,7 +30,7 @@ export class OrderCreatorComponent implements OnInit {
       quantity: this.quantity,
       productId: this.product.id
     };
-    this.http.post('http://localhost:5001/api/order', newOrder)
+    this.http.post('http://localhost:5008/order/api/order', newOrder)
     .subscribe(
       (val) => {
         console.log("POST call successful value returned in body", val);
@@ -43,7 +43,7 @@ export class OrderCreatorComponent implements OnInit {
   callWebApiForProducts() {
     console.log("lets call api");
 
-    this.http.get<ProductDto[]>('http://localhost:5001/api/products', { headers: { "accept": "text/plain" } }).subscribe(result => {
+    this.http.get<ProductDto[]>('http://localhost:5008/order/api/products', { headers: { "accept": "text/plain" } }).subscribe(result => {
       console.log(result);
       this.products = result;
     }, error => console.error(error));

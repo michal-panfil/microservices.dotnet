@@ -26,7 +26,7 @@ export class OrderListComponent implements OnInit, DoCheck  {
  callWebApiForOrders() {
   console.log("lets call api");
 
-    this.http.get<OrderDto[]>('http://localhost:5001/api/order',{headers:{"accept": "text/plain"}}).subscribe(result => {
+    this.http.get<OrderDto[]>('http://localhost:5008/order/api/order',{headers:{"accept": "text/plain"}}).subscribe(result => {
       console.log(result);
       this.orders = result;
     }, error => console.error(error));

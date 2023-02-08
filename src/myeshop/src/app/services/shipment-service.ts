@@ -13,7 +13,7 @@ export class SignalrService {
     
     constructor() { 
         this.hubConnection = new signalR.HubConnectionBuilder()
-                              .withUrl('http://localhost:5006/shipmentHub')
+                              .withUrl('http://localhost:5008/warehouse/shipmentHub')
                               .build();
     }
   

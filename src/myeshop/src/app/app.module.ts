@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { SignalrService } from './services/shipment-service';
+import { OrderApiClient } from './services/orderr-api-client';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { SignalrService } from './services/shipment-service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [SignalrService],
+  providers: [SignalrService, OrderApiClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

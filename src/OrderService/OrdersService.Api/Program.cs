@@ -7,6 +7,9 @@ using OrdersService.Infrastructure.Services;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using OrdersService.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace OrdersService.Api;
 
@@ -25,14 +28,52 @@ public class Program
 
         }));
         // Add services to the container.
-        builder.Services.AddHostedService<MessageReceiverService>();
+        //builder.Services.AddHostedService<MessageReceiverService>();
         builder.Services.AddControllers();
+        
+        builder.Services.AddAuthentication("Bearer")
+            .AddJwtBearer("Bearer", options =>
+            {
+                options.Authority = "https://localhost:5001";
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false
+                };
+            }
+            );
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-        builder.Services.AddDatabase(builder.Configuration);
-        builder.Services.AddMessageBus(builder.Configuration);
-        builder.Services.AddDataServices(builder.Configuration);
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "My API",
+                Version = "v1"
+            });
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                In = ParameterLocation.Header,
+                Description = "Please insert JWT with Bearer into field",
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey
+            });
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+   {
+     new OpenApiSecurityScheme
+     {
+       Reference = new OpenApiReference
+       {
+         Type = ReferenceType.SecurityScheme,
+         Id = "Bearer"
+       }
+      },
+      new string[] { }
+    }
+  });
+        });
+        //builder.Services.AddDatabase(builder.Configuration);
+        //builder.Services.AddMessageBus(builder.Configuration);
+        //builder.Services.AddDataServices(builder.Configuration);
         builder.Services.AddSingleton(() => new JsonSerializerOptions(JsonSerializerDefaults.Web)
         {
             Converters = { new JsonStringEnumConverter(), }
@@ -49,7 +90,7 @@ public class Program
 
         var app = builder.Build();
 
-        app.MigrateDatabase();
+       // app.MigrateDatabase();
         // Configure the HTTP request pipeline.
         app.UseSwagger();
         app.UseSwaggerUI();
@@ -61,7 +102,7 @@ public class Program
             .AllowAnyHeader());
 
 
-
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();

@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OrdersService.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OrdersService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrderController : ControllerBase
     {
         private readonly MessageBusSender<OrderDto> messageSender;

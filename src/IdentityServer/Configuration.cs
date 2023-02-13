@@ -11,7 +11,7 @@ namespace IdentityServer
             new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                //new IdentityResources.Profile(),
+                new IdentityResources.Profile(),
                 new IdentityResource
                 {
                     Name = "rc.scope",
@@ -24,7 +24,9 @@ namespace IdentityServer
 
         public static IEnumerable<ApiResource> GetApis() =>
             new List<ApiResource> {
-                new ApiResource("ApiOne"),
+                new ApiResource("OrderApi"),
+                new ApiResource("WarehouseApi"),
+
                 new ApiResource("ApiTwo", new string[] { "rc.api.garndma" }),
             };
 
@@ -36,7 +38,7 @@ namespace IdentityServer
 
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
 
-                    AllowedScopes = { "ApiOne" }
+                    AllowedScopes = { "OrderApi" }
                 },
                 new Client {
                     ClientId = "client_id_mvc",
@@ -49,7 +51,7 @@ namespace IdentityServer
                     PostLogoutRedirectUris = { "https://localhost:44322/Home/Index" },
 
                     AllowedScopes = {
-                        "ApiOne",
+                        "OrderApi",
                         "ApiTwo",
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
@@ -59,7 +61,7 @@ namespace IdentityServer
                     RequireConsent = false,
                 },
                 new Client {
-                    ClientId = "angular",
+                    ClientId = "myshopui",
 
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
@@ -71,7 +73,8 @@ namespace IdentityServer
 
                     AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        "ApiOne",
+                        "OrderApi",
+                        "WarehouseApi"
                     },
 
                     AllowAccessTokensViaBrowser = true,

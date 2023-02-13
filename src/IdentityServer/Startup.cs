@@ -28,7 +28,6 @@ namespace IdentityServer
 
             services.AddDbContext<AppDbContext>(config =>
             {
-                // config.UseSqlServer(connectionString);
                 config.UseInMemoryDatabase("Memory");
             });
 
@@ -52,22 +51,9 @@ namespace IdentityServer
 
             var assembly = typeof(Startup).Assembly.GetName().Name;
 
-            //var filePath = Path.Combine(_env.ContentRootPath, "is_cert.pfx");
-            //var certificate = new X509Certificate2(filePath, "password");
-
             services.AddIdentityServer()
                 .AddAspNetIdentity<IdentityUser>()
-                //.AddConfigurationStore(options =>
-                //{
-                //    options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
-                //        sql => sql.MigrationsAssembly(assembly));
-                //})
-                //.AddOperationalStore(options =>
-                //{
-                //    options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
-                //        sql => sql.MigrationsAssembly(assembly));
-                //})
-                //.AddSigningCredential(certificate);
+ 
                 .AddInMemoryApiResources(Configuration.GetApis())
                 .AddInMemoryIdentityResources(Configuration.GetIdentityResources())
                 .AddInMemoryClients(Configuration.GetClients())

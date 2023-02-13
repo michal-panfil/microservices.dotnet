@@ -12,9 +12,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { SignalrService } from './services/shipment-service';
 import { OrderApiClient } from './services/orderr-api-client';
-import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
-import { LoginComponent } from './login/login.component';
 import { AuthConfigModule } from './auth/auth-config.module';
+import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
+import { LoginComponent } from './auth/login.component';
 
 
 @NgModule({
@@ -34,14 +34,12 @@ import { AuthConfigModule } from './auth/auth-config.module';
     ReactiveFormsModule,
     AuthModule.forRoot({
       config: {
-        authority: 'https://localhost:5001',
+        clientId: 'myshopui',
+        authority: 'https://localhost:44305',
+        responseType: 'code',
         redirectUrl: window.location.origin,
         postLogoutRedirectUri: window.location.origin,
-        clientId: 'myshopui',
-        scope: 'openid orderapi warehouseapi',
-        responseType: 'code',
-        silentRenew: true,
-        useRefreshToken: true,
+        scope: 'openid OrderApi WarehouseApi',
         logLevel: LogLevel.Debug,
       },
     }),

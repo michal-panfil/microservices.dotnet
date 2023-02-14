@@ -35,6 +35,10 @@ services:
       - "5002:80"
     depends_on:
       - orderservice
+  identityserver:
+    build: ./src/IdentityServer/.
+    ports:
+      - "5009:44322"
   myapp:
     build: ./src/ReverseApi/.
     ports:

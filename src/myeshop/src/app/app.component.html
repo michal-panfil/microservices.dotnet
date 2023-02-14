@@ -1,14 +1,19 @@
 <h1>My E-Shop app</h1>
 <app-login> </app-login>
-<div class="d-flex flex-row">
-    <div class="p2 w-75">
-        <app-order-list [keyword]="keyword"></app-order-list>
 
+<div *ngIf="isAuthorized">   
+    <div class="d-flex flex-row">
+        <div class="p2 w-75">
+            <app-order-list [keyword]="keyword"></app-order-list>
+    
+        </div>
+        <div class="p2 w-25 p-3 m-1">
+            <app-order-creator (emitter)="send($event)"></app-order-creator>
+    
+        </div>
+    
     </div>
-    <div class="p2 w-25 p-3 m-1">
-        <app-order-creator (emitter)="send($event)"></app-order-creator>
+    <app-order-details></app-order-details>
 
-    </div>
 
 </div>
-<app-order-details></app-order-details>

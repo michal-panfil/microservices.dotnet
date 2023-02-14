@@ -35,7 +35,7 @@ import { LoginComponent } from './auth/login.component';
     AuthModule.forRoot({
       config: {
         clientId: 'myshopui',
-        authority: 'https://localhost:44305',
+        authority: 'https://localhost:5009',
         responseType: 'code',
         redirectUrl: window.location.origin,
         postLogoutRedirectUri: window.location.origin,

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 
@@ -48,7 +49,7 @@ namespace IdentityServer
                 config.LoginPath = "/Auth/Login";
                 config.LogoutPath = "/Auth/Logout";
             });
-
+            IdentityModelEventSource.ShowPII = true;
             var assembly = typeof(Startup).Assembly.GetName().Name;
 
             services.AddIdentityServer()

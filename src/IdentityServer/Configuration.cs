@@ -67,9 +67,9 @@ namespace IdentityServer
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris = { "http://localhost:4200" },
-                    PostLogoutRedirectUris = { "http://localhost:4200" },
-                    AllowedCorsOrigins = { "http://localhost:4200" },
+                    RedirectUris = { "http://localhost:5002" },
+                    PostLogoutRedirectUris = { "http://localhost:5002" },
+                    AllowedCorsOrigins = { "http://localhost:5002" },
 
                     AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,

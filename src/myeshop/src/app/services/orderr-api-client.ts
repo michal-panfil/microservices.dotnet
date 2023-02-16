@@ -10,14 +10,10 @@ export class OrderApiClient {
 
   public getAllOrders() 
 {
-    let token = this.oidcSecurityService.getAccessToken();
-    let orders : OrderDto[] = [];
-    this.http.get<OrderDto[]>('http://localhost:5008/order/api/order',{headers:{"accept": "text/plain",
-    "Authorization": 'Bearer ' + token,}}).subscribe(result => {
-        orders = result;
-      }, error => console.error(error));
-      
-      return orders;
+  
+        return this.http.get<OrderDto[]>('http://localhost:5008/order/api/order',
+        {headers:{"accept": "text/plain",
+        }});
 }
 }
 

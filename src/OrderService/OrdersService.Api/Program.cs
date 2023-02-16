@@ -29,19 +29,9 @@ public class Program
 
         }));
         // Add services to the container.
-        //builder.Services.AddHostedService<MessageReceiverService>();
+        builder.Services.AddHostedService<MessageReceiverService>();
         builder.Services.AddControllers();
         
-        builder.Services.AddAuthentication("Bearer")
-            .AddJwtBearer("Bearer", options =>
-            {
-                options.Authority = "https://identityserver:44322";
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateAudience = false
-                };
-            }
-            );
 
         IdentityModelEventSource.ShowPII = true;
         builder.Services.AddAuthorization(options =>
@@ -82,9 +72,9 @@ public class Program
     }
   });
         });
-        //builder.Services.AddDatabase(builder.Configuration);
-        //builder.Services.AddMessageBus(builder.Configuration);
-        //builder.Services.AddDataServices(builder.Configuration);
+        builder.Services.AddDatabase(builder.Configuration);
+        builder.Services.AddMessageBus(builder.Configuration);
+        builder.Services.AddDataServices(builder.Configuration);
         builder.Services.AddSingleton(() => new JsonSerializerOptions(JsonSerializerDefaults.Web)
         {
             Converters = { new JsonStringEnumConverter(), }

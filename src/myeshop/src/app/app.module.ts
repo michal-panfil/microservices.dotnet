@@ -35,10 +35,10 @@ import { LoginComponent } from './auth/login.component';
     AuthModule.forRoot({
       config: {
         clientId: 'myshopui',
-        authority: 'https://localhost:5009',
+        authority: 'http://localhost:5009',
         responseType: 'code',
-        redirectUrl: window.location.origin,
-        postLogoutRedirectUri: window.location.origin,
+        redirectUrl: "http://localhost:5002",
+        postLogoutRedirectUri: "http://localhost:5002",
         scope: 'openid OrderApi WarehouseApi',
         logLevel: LogLevel.Debug,
       },

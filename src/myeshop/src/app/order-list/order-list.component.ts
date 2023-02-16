@@ -17,13 +17,17 @@ export class OrderListComponent implements OnInit, DoCheck  {
   constructor(private orderAPi: OrderApiClient) { }
 
   ngOnInit(): void {
-    this.orders = this.orderAPi.getAllOrders();
-  }
+     this.orderAPi.getAllOrders().subscribe(result => {
+      this.orders = result;
+  });
+}
   ngDoCheck(){
     if( this.keyword != undefined && this.keywordCopy != this.keyword){
       console.log("refreshing");
       this.keywordCopy = this.keyword;
-      this.orders = this.orderAPi.getAllOrders();
+       this.orderAPi.getAllOrders().subscribe(result => {
+        this.orders = result;
+      });
     }
   }
 }

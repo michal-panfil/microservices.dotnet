@@ -12,7 +12,6 @@ namespace OrdersService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class OrderController : ControllerBase
     {
         private readonly MessageBusSender<OrderDto> messageSender;

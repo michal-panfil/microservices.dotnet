@@ -27,7 +27,8 @@ namespace OrdersService.Api.Controllers
         [HttpGet]
         public List<OrderDto> Get()
         {
-            return this.dbContext.Orders.Include(x => x.Product).Select(p => new OrderDto{
+            return this.dbContext.Orders.Include(x => x.Product).Select(p => new OrderDto
+            {
                 Id = p.Id,
                 ClientName = p.ClientName,
                 ClientAddress = p.ClientAddress,
@@ -50,9 +51,10 @@ namespace OrdersService.Api.Controllers
                 Quantity = order.Quantity,
                 Product = this.dbContext.Products.Single(x => x.Id == order.ProductId),
             };
+
             this.dbContext.Orders.Add(newOrder);
             this.dbContext.SaveChanges();
-            // sent message
+
             order.Id = newOrder.Id;
             this.messageSender.SendRabbitMqMessage(order);
             return Ok();

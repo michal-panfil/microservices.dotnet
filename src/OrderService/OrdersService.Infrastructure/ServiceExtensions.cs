@@ -20,7 +20,8 @@ namespace OrdersService.Infrastructure
     {
         public static void AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<OrderContext>(x => x.UseSqlServer("Server=order_mssql_db,1433;Database=OrderDb;User Id=SA;Password=Password12345!;TrustServerCertificate=True;Encrypt=False"));
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<OrderContext>(x => x.UseSqlServer(connectionString));
         }
 
         public static void AddMessageBus(this IServiceCollection services, IConfiguration configuration)

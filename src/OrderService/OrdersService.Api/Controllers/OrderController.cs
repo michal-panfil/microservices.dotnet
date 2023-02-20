@@ -15,19 +15,19 @@ namespace OrdersService.Api.Controllers
     public class OrderController : ControllerBase
     {
         private readonly MessageBusSender<OrderDto> messageSender;
-        private readonly OrderContext dbContext;
+        private readonly OrderRepository orderRepo;
 
-        public OrderController(OrderContext dbContext, MessageBusSender<OrderDto> messageSender)
+        public OrderController(OrderRepository orderRepo, MessageBusSender<OrderDto> messageSender)
         {
-            this.dbContext = dbContext;
+            this.orderRepo = orderRepo;
             this.messageSender = messageSender;
         }
 
-
+        
         [HttpGet]
         public List<OrderDto> Get()
         {
-            return this.dbContext.Orders.Include(x => x.Product).Select(p => new OrderDto
+            return this.orderRepo.GetOrders(x => true).Include(x => x.Product).Select(p => new OrderDto
             {
                 Id = p.Id,
                 ClientName = p.ClientName,

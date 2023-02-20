@@ -1,23 +1,25 @@
-﻿using OrdersService.Core.Models.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using OrdersService.Core.Models.Entities;
 using OrdersService.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OrdersService.Infrastructure.Data;
-public class OrderRepository : IOrderRepository
+public class OrderRepository<TEntity> where TEntity : class
 {
     private readonly OrderContext context;
     public OrderRepository(OrderContext dbContext)
     {
         context = dbContext;
     }
-    public IQueryable<Order> GetOrders(Predicate<Order> predicate)
+    public IQueryable<TEntity> GetOrders(Predicate<TEntity> predicate)
     {
-        return this.context.Orders.Where(x => predicate(x));
+        return this.context.Set<TEntity>();
     }
-    public async Task InsertOrder(Order orderToInsert) => await this.context.Orders.AddAsync(orderToInsert);
+    public async Task InsertOrder(TEntity orderToInsert) => await this.context.Set<TEntity>().AddAsync(orderToInsert);
 
 }

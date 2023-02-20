@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace OrdersService.Core.Services
 {
-    public interface IOrderRepository
+    public interface IRepository<T>
     {
-        IQueryable<Order> GetOrders(Predicate<Order> predicate);
-        Task InsertOrder(Order orderToInsert);
+        IQueryable<T> GetAll(Predicate<T> predicate);
+        Task Insert(T orderToInsert);
 
     }
 }

@@ -7,9 +7,8 @@ using WarehouseService.Core.Enums;
 
 namespace WarehouseService.Core.Models
 {
-    public class Order
+    public class Order : BaseEntity
     {
-        public int Id { get; set; }
         public string ClientName { get; set; } = string.Empty;
         public string ClientAddress { get; set; } = string.Empty;
         public int Quantity { get; set; }

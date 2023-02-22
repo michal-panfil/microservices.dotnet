@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WarehouseService.Core.Interfaces;
+using WarehouseService.Core.Models;
 using WarehouseService.Infrastructure.Data;
 using WarehouseService.Infrastructure.Serices;
 
@@ -11,14 +12,16 @@ namespace WarehouseService.Api.Controllers
     [ApiController]
     public class ShipmentInfo : ControllerBase
     {
-        private readonly WarehouseContext context;
         private readonly ILogger<ShipmentInfo> logger;
+        private readonly IWarehouseRepository<Core.Models.Shipment> shipmenrRepo;
 
-        public ShipmentInfo(WarehouseContext context, IShipmentClient shipmentClient, ILogger<ShipmentInfo> logger)
+        public ShipmentInfo(
+            IShipmentClient shipmentClient, ILogger<ShipmentInfo> logger,
+            IWarehouseRepository<Core.Models.Shipment> shipmenrRepo)
         {
-            this.context = context;
             ShipmentClient = shipmentClient;
             this.logger = logger;
+            this.shipmenrRepo = shipmenrRepo;
         }
 
         public IShipmentClient ShipmentClient { get; }
@@ -26,7 +29,7 @@ namespace WarehouseService.Api.Controllers
         [HttpPost("{id:int}")]
         public async Task Post(int id)
         {
-            var shipment = this.context.Shipments.FirstOrDefault(s => s.OrderId == id);
+            var shipment = await this.shipmenrRepo.GetAsync(id);
             if (shipment == null)
             {
                 logger.LogWarning($"Shipment with id {id} NOT found");
@@ -34,8 +37,7 @@ namespace WarehouseService.Api.Controllers
                 return;
             }
             _ = ShipmentClient.GetShipmentInfo(shipment);
-            await Task.CompletedTask;
-            
+
         }
     }
 }

@@ -22,6 +22,7 @@ namespace WarehouseService.Infrastructure
         public static void AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<WarehouseContext>(x => x.UseSqlServer("Server=warehouse_mssql_db,1433;Database=WarehouseDb;User Id=SA;Password=Password12345!;TrustServerCertificate=True;Encrypt=False"));
+            services.AddScoped(typeof(IWarehouseRepository<>), typeof(WarehouseRepository<>));
         }
         
         public static void AddDomainServices(this IServiceCollection services, IConfiguration configuration)

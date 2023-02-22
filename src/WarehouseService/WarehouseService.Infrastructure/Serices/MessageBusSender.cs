@@ -1,11 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using WarehouseService.Core.Interfaces;
 
 namespace WarehouseService.Infrastructure.Serices

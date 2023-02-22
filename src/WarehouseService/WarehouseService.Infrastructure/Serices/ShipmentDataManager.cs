@@ -1,11 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WarehouseService.Core.Interfaces;
-using WarehouseService.Core.Models;
 using WarehouseService.Infrastructure.Data;
 
 namespace WarehouseService.Infrastructure.Serices
@@ -18,7 +12,7 @@ namespace WarehouseService.Infrastructure.Serices
         {
             this.serviceScopeFactory = serviceScopeFactory;
         }
-        public void AddShipment(WarehouseService.Core.Models.Shipment shipment)
+        public void AddShipment(Core.Models.Shipment shipment)
         {
             using var scope = this.serviceScopeFactory.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<WarehouseContext>();

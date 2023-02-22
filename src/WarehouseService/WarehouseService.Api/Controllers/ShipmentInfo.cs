@@ -1,10 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
 using WarehouseService.Core.Interfaces;
-using WarehouseService.Core.Models;
-using WarehouseService.Infrastructure.Data;
-using WarehouseService.Infrastructure.Serices;
 
 namespace WarehouseService.Api.Controllers
 {

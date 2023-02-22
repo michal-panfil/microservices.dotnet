@@ -1,12 +1,6 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using Grpc.Core;
+﻿using Grpc.Core;
 using Grpc.Net.Client;
 using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WarehouseService.Core.Interfaces;
 using WarehouseService.Core.Models;
 using WarehouseService.Infrastructure.Hubs;

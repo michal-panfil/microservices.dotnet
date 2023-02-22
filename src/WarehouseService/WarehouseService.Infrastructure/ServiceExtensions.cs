@@ -1,15 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WarehouseService.Core.Interfaces;
-using WarehouseService.Core.Models;
 using WarehouseService.Core.Models.Messages;
 using WarehouseService.Core.Services;
 using WarehouseService.Infrastructure.Data;

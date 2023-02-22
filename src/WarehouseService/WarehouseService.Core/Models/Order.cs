@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WarehouseService.Core.Enums;
+﻿using WarehouseService.Core.Enums;
 
 namespace WarehouseService.Core.Models
 {

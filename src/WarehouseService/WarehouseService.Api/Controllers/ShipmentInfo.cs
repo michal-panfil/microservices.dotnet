@@ -23,8 +23,8 @@ namespace WarehouseService.Api.Controllers
 
         public IShipmentClient ShipmentClient { get; }
 
-        [HttpGet("{id:int}")]
-        public async Task Get(int id)
+        [HttpPost("{id:int}")]
+        public async Task Post(int id)
         {
             var shipment = this.context.Shipments.FirstOrDefault(s => s.OrderId == id);
             if (shipment == null)
@@ -33,10 +33,9 @@ namespace WarehouseService.Api.Controllers
                 this.Response.StatusCode = StatusCodes.Status404NotFound;
                 return;
             }
-            logger.LogInformation($"Shipment with id {id} found");
             _ = ShipmentClient.GetShipmentInfo(shipment);
             await Task.CompletedTask;
-
+            
         }
     }
 }

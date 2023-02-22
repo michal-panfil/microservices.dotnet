@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using WarehouseService.Core.Enums;
+﻿using WarehouseService.Core.Enums;
 using WarehouseService.Core.Interfaces;
 using WarehouseService.Core.Models;
 using WarehouseService.Core.Models.Messages;
@@ -15,21 +9,24 @@ namespace WarehouseService.Core.Services
     {
         private readonly IMessageBusSender<UpdateStatusMessage> meassageSender;
         private readonly IShipmentDataManager shipmentDataManager;
-        private readonly HttpClient httpClient;
+        private readonly IWarehouseApiClient warehouseApiClient;
 
-        public NewOrderManager(IMessageBusSender<UpdateStatusMessage> meassageSender,
-            IShipmentDataManager shipmentDataManager, IHttpClientFactory httpClientFactory)
-        {
+        public NewOrderManager(
+            IMessageBusSender<UpdateStatusMessage> meassageSender,
+            IShipmentDataManager shipmentDataManager,
+            
+            IWarehouseApiClient warehouseApiClient)
+        { 
             this.meassageSender = meassageSender;
             this.shipmentDataManager = shipmentDataManager;
-            this.httpClient = httpClientFactory.CreateClient();
+            this.warehouseApiClient = warehouseApiClient;
+            
+            
         }
 
-
-        public void ProcessNewOrder(OrderDto order)
+        
+    public async void ProcessNewOrder(OrderDto order)
         {
-            // do some processing
-            // send message to message bus
             Task.Delay(1000);
             var shipment = new Shipment
             {
@@ -38,16 +35,15 @@ namespace WarehouseService.Core.Services
                 ReciverName = order.ClientName,
                 KmToTarget = 600
             };
-
-
             this.shipmentDataManager.AddShipment(shipment);
-            
             this.meassageSender.SendRabbitMqMessage(new UpdateStatusMessage()
             {
                 OrderId = order.Id,
                 Status = OrderStatus.InProcess
             });
-            this.httpClient.GetAsync($"http://warehousapi/api/ShipmentInfo/{order.Id}");
+
+           await this.warehouseApiClient.StartShipment(shipment);
+
 
         }
     }

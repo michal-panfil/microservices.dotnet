@@ -17,6 +17,7 @@ namespace WarehouseService.Api
             builder.Services.AddSignalR();
             builder.Services.AddHttpClient();
             builder.Services.AddScoped<IShipmentClient, ShipmentClient>();
+            builder.Services.AddScoped<IWarehouseApiClient, WarehouseApiClient>();
             builder.Services.AddSignalRServices(builder.Configuration);
             builder.Services.AddDomainServices(builder.Configuration);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

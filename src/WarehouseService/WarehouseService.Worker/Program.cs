@@ -19,7 +19,6 @@ namespace WarehouseService.Worker
                     services.AddHostedService<Worker>();
                 })
                 .Build();
-            //host.MigrateDatabase();
             host.Run();
         }
     }

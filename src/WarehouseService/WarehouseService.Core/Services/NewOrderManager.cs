@@ -35,6 +35,7 @@ namespace WarehouseService.Core.Services
                 ReciverName = order.ClientName,
                 KmToTarget = 600
             };
+            
             this.shipmentDataManager.AddShipment(shipment);
             this.meassageSender.SendRabbitMqMessage(new UpdateStatusMessage()
             {

@@ -3,23 +3,16 @@ using Shipment.Grpc;
 
 namespace Shipment.Grpc.Services
 {
-    public class GreeterService : Greeter.GreeterBase
+    public class ShipmentMonitorService : ShipmentMonitor.ShipmentMonitorBase
     {
-        private readonly ILogger<GreeterService> _logger;
+        private readonly ILogger<ShipmentMonitorService> _logger;
 
         private string[] Cities = new string[] { "Warszawa", "Poznañ", "Berlin", "Pary¿", "Lyon", "Marsylia", "Montpellier", "Tuluza" };
-    public GreeterService(ILogger<GreeterService> logger)
+        public ShipmentMonitorService(ILogger<ShipmentMonitorService> logger)
         {
             _logger = logger;
         }
 
-        public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
-        {
-            return Task.FromResult(new HelloReply
-            {
-                Message = "Hello " + request.Name
-            });
-        }
         public override async Task GetKMToTarget(ShipmentRequest request, IServerStreamWriter<ShipmentReply> responseStream, ServerCallContext context)
         {
             var currentKM = request.InitialKM;
@@ -34,10 +27,9 @@ namespace Shipment.Grpc.Services
                     RemainingKm = currentKM,
                     CurrentLocation = Cities[currentKM / 100]
                 });
+
             }
 
-                
         }
-        
     }
 }

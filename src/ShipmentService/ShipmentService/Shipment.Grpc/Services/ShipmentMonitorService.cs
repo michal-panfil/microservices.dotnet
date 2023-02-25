@@ -1,5 +1,4 @@
 using Grpc.Core;
-using Shipment.Grpc;
 
 namespace Shipment.Grpc.Services
 {

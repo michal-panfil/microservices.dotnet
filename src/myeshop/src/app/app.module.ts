@@ -11,10 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { SignalrService } from './services/shipment-service';
-import { OrderApiClient } from './services/orderr-api-client';
-import { AuthConfigModule } from './auth/auth-config.module';
+import { OrderApiClient } from './services/order-api-client';
 import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
-import { LoginComponent } from './auth/login.component';
 
 
 @NgModule({
@@ -23,7 +21,6 @@ import { LoginComponent } from './auth/login.component';
     OrderListComponent,
     OrderCreatorComponent,
     OrderDetailsComponent,
-    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +40,6 @@ import { LoginComponent } from './auth/login.component';
         logLevel: LogLevel.Debug,
       },
     }),
-    AuthConfigModule,
   ],
   providers: [SignalrService, OrderApiClient],
   bootstrap: [AppComponent]

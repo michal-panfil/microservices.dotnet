@@ -15,15 +15,19 @@ namespace OrdersService.Api.Controllers
     public class OrderController : ControllerBase
     {
         private readonly MessageBusSender<OrderDto> messageSender;
-        private readonly OrderRepository orderRepo;
+        private readonly OrderRepository<Order> orderRepo;
+        private readonly OrderRepository<Product> productRepo;
 
-        public OrderController(OrderRepository orderRepo, MessageBusSender<OrderDto> messageSender)
+
+
+        public OrderController(OrderRepository<Order> orderRepo, OrderRepository<Product> productRepo, MessageBusSender<OrderDto> messageSender)
         {
             this.orderRepo = orderRepo;
+            this.productRepo = productRepo;
             this.messageSender = messageSender;
         }
 
-        
+
         [HttpGet]
         public List<OrderDto> Get()
         {
@@ -49,11 +53,10 @@ namespace OrdersService.Api.Controllers
                 ClientName = order.ClientName,
                 ClientAddress = order.ClientAddress,
                 Quantity = order.Quantity,
-                Product = this.dbContext.Products.Single(x => x.Id == order.ProductId),
+                Product = this.productRepo.GetOrders(x => x.Id == order.ProductId).FirstOrDefault(),
             };
 
-            this.dbContext.Orders.Add(newOrder);
-            this.dbContext.SaveChanges();
+            this.orderRepo.InsertOrder(newOrder);
 
             order.Id = newOrder.Id;
             this.messageSender.SendRabbitMqMessage(order);

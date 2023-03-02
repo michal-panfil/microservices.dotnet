@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, DoCheck } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import { OrderDto } from '../models/orderDto';
-import { OrderApiClient } from '../services/orderr-api-client';
+import { OrderApiClient } from '../services/order-api-client';
 
 
 @Component({
@@ -17,17 +16,13 @@ export class OrderListComponent implements OnInit, DoCheck  {
   constructor(private orderAPi: OrderApiClient) { }
 
   ngOnInit(): void {
-     this.orderAPi.getAllOrders().subscribe(result => {
-      this.orders = result;
-  });
-}
+    this.orderAPi.getAllOrders().subscribe( data => this.orders = data)
+  }
   ngDoCheck(){
     if( this.keyword != undefined && this.keywordCopy != this.keyword){
       console.log("refreshing");
       this.keywordCopy = this.keyword;
-       this.orderAPi.getAllOrders().subscribe(result => {
-        this.orders = result;
-      });
+      this.orderAPi.getAllOrders().subscribe( data => this.orders = data)
     }
   }
 }

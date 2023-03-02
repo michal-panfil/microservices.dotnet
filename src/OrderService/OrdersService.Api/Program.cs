@@ -2,6 +2,7 @@ using OrdersService.Infrastructure.HostedServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using OrdersService.Infrastructure;
+using OrdersService.Infrastructure.Data;
 
 namespace OrdersService.Api;
 
@@ -26,6 +27,7 @@ public class Program
         builder.Services.AddDatabase(builder.Configuration);
         builder.Services.AddMessageBus(builder.Configuration);
         builder.Services.AddDataServices(builder.Configuration);
+        builder.Services.AddScoped(typeof (OrderRepository<>), typeof (OrderRepository<>) );
 
         builder.Services.AddSingleton(() => new JsonSerializerOptions(JsonSerializerDefaults.Web)
         {
@@ -50,9 +52,6 @@ public class Program
             .AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader());
-
-        app.UseAuthentication();
-        app.UseAuthorization();
 
         app.MapControllers();
 

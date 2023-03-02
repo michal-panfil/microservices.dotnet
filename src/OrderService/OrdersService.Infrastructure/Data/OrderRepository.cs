@@ -20,6 +20,10 @@ public class OrderRepository<TEntity> where TEntity : class
     {
         return this.context.Set<TEntity>();
     }
-    public async Task InsertOrder(TEntity orderToInsert) => await this.context.Set<TEntity>().AddAsync(orderToInsert);
+    public async Task InsertOrder(TEntity orderToInsert)
+    {
+        await this.context.Set<TEntity>().AddAsync(orderToInsert);
+        await this.context.SaveChangesAsync();
+    }
 
 }

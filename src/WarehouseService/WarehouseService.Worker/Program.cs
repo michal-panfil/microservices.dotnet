@@ -1,5 +1,7 @@
 using WarehouseService.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+using WarehouseService.Core.Interfaces;
+using WarehouseService.Infrastructure.Serices;
 
 namespace WarehouseService.Worker
 {
@@ -11,6 +13,8 @@ namespace WarehouseService.Worker
                 .ConfigureServices(services =>
                 {
                     var config = services.BuildServiceProvider().GetService<IConfiguration>();
+                    services.AddScoped<IWarehouseApiClient, WarehouseApiClient>();
+
                     services.AddDatabase(config);
                     services.MigrateDatabase();
                     services.AddHttpClient();

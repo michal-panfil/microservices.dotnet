@@ -33,7 +33,14 @@ namespace WarehouseService.Infrastructure
             using var serviceScope = sercvices.BuildServiceProvider().GetRequiredService<IServiceScopeFactory>().CreateScope();
             using var context = serviceScope.ServiceProvider.GetRequiredService<WarehouseContext>();
             context.Database.EnsureCreated();
-            context.Database.Migrate();
+            try
+            {
+                context.Database.Migrate();
+            }
+            catch (Exception)
+            {
+
+            }
         }
     }
 }

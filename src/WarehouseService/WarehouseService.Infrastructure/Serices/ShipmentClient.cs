@@ -18,10 +18,11 @@ namespace WarehouseService.Infrastructure.Serices
         public async Task GetShipmentInfo(WarehouseService.Core.Models.Shipment shipment)
         {
             using var channel = GrpcChannel.ForAddress("http://shipmentgrpc:80");
-            var client = new Shipment.Grpc.Greeter.GreeterClient(channel);
+
+            var client = new ShipmentGrpc.Grpc.ShipmentMonitor.ShipmentMonitorClient(channel);
 
             var cts = new CancellationTokenSource(TimeSpan.FromSeconds(100));
-            using var streamingCall = client.GetKMToTarget(new Shipment.Grpc.ShipmentRequest { ShipmentId = shipment.OrderId , InitialKM = 600}, cancellationToken: cts.Token);
+            using var streamingCall = client.GetKMToTarget(new ShipmentGrpc.Grpc.ShipmentRequest { ShipmentId = shipment.OrderId, InitialKM = 600 }, cancellationToken: cts.Token);
 
             try
             {

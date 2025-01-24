@@ -1,7 +1,6 @@
-<p>Order List</p>
 <p>{{ orders.length}} items.</p>
-<table class="table table-striped">
-	<thead>
+<p-table [value]="orders" class="table table-striped">
+	<ng-template #header>
 		<tr>
 			<th scope="col">#</th>
 			<th scope="col">id</th>
@@ -11,10 +10,10 @@
 			<th scope="col">quantity</th>
 			<th scope="col">status</th>
 		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let order of orders; index as i">
-			<th scope="row">{{ i + 1 }}</th>
+	</ng-template>
+	<ng-template #body let-order let-rowIndex="rowIndex">
+		<tr >
+			<th scope="row">{{ rowIndex + 1 }}</th>
 			<td>
 				{{ order.id}}
 			</td>
@@ -34,5 +33,10 @@
 				{{ order.status}}
 			</td>
 		</tr>
-	</tbody>
-</table>
+	</ng-template>
+	<ng-template #emptymessage>
+		<tr>
+			<td colspan="6">There are no order yet.</td>
+		</tr>
+	</ng-template>
+</p-table>

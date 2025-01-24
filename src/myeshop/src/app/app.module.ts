@@ -1,6 +1,5 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +12,12 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
 import { SignalrService } from './services/shipment-service';
 import { OrderApiClient } from './services/order-api-client';
 import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
+import { BrowserModule } from '@angular/platform-browser';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
+import { CardModule } from 'primeng/card';
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({ declarations: [
@@ -21,10 +26,14 @@ import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
         OrderCreatorComponent,
         OrderDetailsComponent,
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    imports: 
+    [
+        BrowserModule,
         AppRoutingModule,
         NgbModule,
         FormsModule,
+        CardModule,
+        TableModule,  
         ReactiveFormsModule,
         AuthModule.forRoot({
             config: {
@@ -36,5 +45,17 @@ import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
                 scope: 'openid OrderApi WarehouseApi',
                 logLevel: LogLevel.Debug,
             },
-        })], providers: [SignalrService, OrderApiClient, provideHttpClient(withInterceptorsFromDi())] })
+        })
+    ], 
+    providers: [SignalrService, OrderApiClient, provideHttpClient(withInterceptorsFromDi()),
+        provideAnimationsAsync(),
+        providePrimeNG({
+            theme: {
+                preset: Aura
+            }
+        })
+    ],
+    bootstrap: [AppComponent], 
+ })
 export class AppModule { }
+

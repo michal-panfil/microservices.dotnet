@@ -6,9 +6,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProductDto } from '../models/productDto';
 
 @Component({
-  selector: 'app-order-creator',
-  templateUrl: './order-creator.component.html',
-  styleUrls: ['./order-creator.component.scss']
+    selector: 'app-order-creator',
+    templateUrl: './order-creator.component.html',
+    styleUrls: ['./order-creator.component.scss'],
+    standalone: false
 })
 export class OrderCreatorComponent implements OnInit {
   @Output() emitter:EventEmitter<string>

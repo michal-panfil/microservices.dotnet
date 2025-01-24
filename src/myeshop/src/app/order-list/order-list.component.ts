@@ -4,9 +4,10 @@ import { OrderApiClient } from '../services/order-api-client';
 
 
 @Component({
-  selector: 'app-order-list',
-  templateUrl: './order-list.component.html',
-  styleUrls: ['./order-list.component.scss']
+    selector: 'app-order-list',
+    templateUrl: './order-list.component.html',
+    styleUrls: ['./order-list.component.scss'],
+    standalone: false
 })
 export class OrderListComponent implements OnInit, DoCheck  {
   @Input() keyword:string | undefined;

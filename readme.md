@@ -1,3 +1,12 @@
+#Tech stack
+.NET 8
+Angular
+Docker
+RabbitMQ
+MSSQL
+GRPC
+nginx - revers api
+
 #Arhitecture
 
 ![alt text](./assets/Microservice%20architecture.drawio.svg "Architecture")

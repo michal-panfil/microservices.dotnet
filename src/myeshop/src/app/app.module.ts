@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -15,33 +15,26 @@ import { OrderApiClient } from './services/order-api-client';
 import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
 
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    OrderListComponent,
-    OrderCreatorComponent,
-    OrderDetailsComponent,
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    NgbModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AuthModule.forRoot({
-      config: {
-        clientId: 'myshopui',
-        authority: 'http://localhost:5009',
-        responseType: 'code',
-        redirectUrl: "http://localhost:5002",
-        postLogoutRedirectUri: "http://localhost:5002",
-        scope: 'openid OrderApi WarehouseApi',
-        logLevel: LogLevel.Debug,
-      },
-    }),
-  ],
-  providers: [SignalrService, OrderApiClient],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        OrderListComponent,
+        OrderCreatorComponent,
+        OrderDetailsComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        NgbModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AuthModule.forRoot({
+            config: {
+                clientId: 'myshopui',
+                authority: 'http://localhost:5009',
+                responseType: 'code',
+                redirectUrl: "http://localhost:5002",
+                postLogoutRedirectUri: "http://localhost:5002",
+                scope: 'openid OrderApi WarehouseApi',
+                logLevel: LogLevel.Debug,
+            },
+        })], providers: [SignalrService, OrderApiClient, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }

@@ -1,19 +1,21 @@
 <p-card header="My E-Shop app">
 
-        <div class="m-5">
-            <div class="d-flex flex-row">
-                <p-card header="order list:" class="p2 w-75">
-                    <app-order-list [keyword]="keyword"></app-order-list>
+    <div class="m-5 bg-light bg-gradient p-2">
+        <div class="d-flex flex-row">
+            <p-card header="order list:" class="p2 w-75">
+                <app-order-list [keyword]="keyword"></app-order-list>
 
-                </p-card>
-                <div class="p2 w-25 p-3 m-1">
-                    <app-order-creator (emitter)="send($event)"></app-order-creator>
-
-                </div>
+            </p-card>
+            <div class="p2 w-25 p-3 m-1">
+                <app-order-creator (emitter)="send($event)"></app-order-creator>
 
             </div>
-            <app-order-details></app-order-details>
-
 
         </div>
+        <div class="bg-light ">
+            <app-order-details></app-order-details>
+
+        </div>
+
+    </div>
 </p-card>

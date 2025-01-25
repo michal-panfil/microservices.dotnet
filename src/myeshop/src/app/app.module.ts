@@ -18,6 +18,7 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 @NgModule({ declarations: [
@@ -33,7 +34,8 @@ import { TableModule } from 'primeng/table';
         NgbModule,
         FormsModule,
         CardModule,
-        TableModule,  
+        TableModule, 
+        InputNumberModule, 
         ReactiveFormsModule,
         AuthModule.forRoot({
             config: {

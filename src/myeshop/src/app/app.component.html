@@ -1,8 +1,8 @@
-<p-card header="My E-Shop app">
-
+<div styleClass="bg-light">
+<div>My eshop</div>
     <div class="m-5 bg-light bg-gradient p-2">
         <div class="d-flex flex-row">
-            <p-card header="order list:" class="p2 w-75">
+            <p-card header="Order list:" class="p2 w-75">
                 <app-order-list [keyword]="keyword"></app-order-list>
 
             </p-card>
@@ -13,9 +13,12 @@
 
         </div>
         <div class="bg-light ">
+            <p-card header="Shipment list:" class="p2 w-75">
+
             <app-order-details></app-order-details>
+        </p-card>
 
         </div>
 
     </div>
-</p-card>
+</div>

@@ -3,11 +3,11 @@
     <div class="m-5 bg-light bg-gradient p-2">
         <div class="d-flex flex-row">
             <p-card header="Order list:" class="p2 w-75">
-                <app-order-list [keyword]="keyword"></app-order-list>
+                <app-order-list></app-order-list>
 
             </p-card>
             <div class="p2 w-25 p-3 m-1">
-                <app-order-creator (emitter)="send($event)"></app-order-creator>
+                <app-order-creator></app-order-creator>
 
             </div>
 

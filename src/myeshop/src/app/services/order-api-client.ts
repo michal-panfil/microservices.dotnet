@@ -6,13 +6,15 @@ import { OrderDto } from "../models/orderDto";
 @Injectable()
 export class OrderApiClient {
   constructor(private http: HttpClient,
-    private oidcSecurityService: OidcSecurityService,) {}
+    private oidcSecurityService: OidcSecurityService,) { }
 
-  public getAllOrders() 
-{
-  
-        return this.http.get<OrderDto[]>('http://localhost:5008/order/api/order',
-        {headers:{"accept": "text/plain",
-        }});
-}
+  public getAllOrders() {
+
+    return this.http.get<OrderDto[]>('http://localhost:5008/order/api/order',
+      {
+        headers: {
+          "accept": "text/plain",
+        }
+      });
+  }
 }

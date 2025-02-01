@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProductDto } from '../models/productDto';
+import { ShopService } from '../services/shop.service';
 
 @Component({
     selector: 'app-order-creator',
@@ -12,14 +13,12 @@ import { ProductDto } from '../models/productDto';
     standalone: false
 })
 export class OrderCreatorComponent implements OnInit {
-  @Output() emitter:EventEmitter<string>
-  = new EventEmitter<string>();
   products: Product[] = [];
   public clientName: string = "";
   public clientAddress: string = "";
   public quantity: number = 0;
   public product: Product = { id: 0, name: '' };
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private shopService: ShopService) {
   }
   ngOnInit(): void {
     this.callWebApiForProducts();
@@ -35,7 +34,7 @@ export class OrderCreatorComponent implements OnInit {
     .subscribe(
       (val) => {
         console.log("POST call successful value returned in body", val);
-        this.emitter.emit("Order created:" + Date.now());
+        this.shopService.setNewOrderId(Date.now())
       }
     );
     this.clearForm();

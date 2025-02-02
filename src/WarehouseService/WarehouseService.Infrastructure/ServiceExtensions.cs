@@ -42,5 +42,12 @@ namespace WarehouseService.Infrastructure
 
             }
         }
+
+        public static void AddHttpClients(this IServiceCollection services)
+        {
+            services.AddHttpClient();
+            services.AddScoped<IShipmentClient, ShipmentClient>();
+            services.AddScoped<IWarehouseApiClient, WarehouseApiClient>();
+        }
     }
 }

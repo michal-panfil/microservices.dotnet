@@ -1,7 +1,6 @@
-﻿namespace WarehouseService.Core.Interfaces
+﻿namespace WarehouseService.Core.Interfaces;
+
+public interface IShipmentClient
 {
-    public interface IShipmentClient
-    {
-        Task GetShipmentInfo(Models.Shipment shipment);
-    }
+    Task GetShipmentInfo(Models.Shipment shipment);
 }

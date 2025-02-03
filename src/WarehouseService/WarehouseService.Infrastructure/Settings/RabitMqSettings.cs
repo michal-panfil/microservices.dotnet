@@ -7,5 +7,4 @@ public class RabitMqSettings
     public string HostName { get; init; }
     public int Port { get; init; }
     public Dictionary<string, string> Queues { get; init; }
-
 }

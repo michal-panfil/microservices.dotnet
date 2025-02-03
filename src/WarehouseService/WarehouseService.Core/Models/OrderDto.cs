@@ -1,12 +1,3 @@
-﻿namespace WarehouseService.Core.Models
-{
-    public class OrderDto
-    {
-        public int Id { get; set; }
-        public string ClientName { get; set; }
-        public string ClientAddress { get; set; }
-        public int Quantity { get; set; }
-        public int ProductId { get; set; }
-        public string? ProductName { get; set; }
-    }
-}
+﻿namespace WarehouseService.Core.Models;
+
+public record struct OrderDto(int Id, string ClientName, string ClientAddress, int Quantity, int ProductId, string? ProductName);

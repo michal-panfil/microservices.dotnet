@@ -1,17 +1,14 @@
 ﻿using WarehouseService.Core.Enums;
 
-namespace WarehouseService.Core.Models
+namespace WarehouseService.Core.Models;
+
+public class Order : BaseEntity
 {
-    public class Order : BaseEntity
-    {
-        public string ClientName { get; set; } = string.Empty;
-        public string ClientAddress { get; set; } = string.Empty;
-        public int Quantity { get; set; }
-        public int ProductId { get; set; }
-        public virtual Product Product { get; set; } = new();
-
-        public OrderStatus Status { get; set; }
-
-        public int TimeToTarget { get; set; }
-    }
+    public string ClientName { get; set; } = string.Empty;
+    public string ClientAddress { get; set; } = string.Empty;
+    public int Quantity { get; set; }
+    public int ProductId { get; set; }
+    public virtual Product Product { get; set; } = new();
+    public OrderStatus Status { get; set; }
+    public int TimeToTarget { get; set; }
 }

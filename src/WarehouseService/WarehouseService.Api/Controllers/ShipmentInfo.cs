@@ -9,29 +9,29 @@ namespace WarehouseService.Api.Controllers
     {
         private readonly ILogger<ShipmentInfo> logger;
         private readonly IWarehouseRepository<Core.Models.Shipment> shipmenrRepo;
+        private readonly IShipmentClient shipmentClient;
 
         public ShipmentInfo(
-            IShipmentClient shipmentClient, ILogger<ShipmentInfo> logger,
+            IShipmentClient shipmentClient, 
+            ILogger<ShipmentInfo> logger,
             IWarehouseRepository<Core.Models.Shipment> shipmenrRepo)
         {
-            ShipmentClient = shipmentClient;
+            this.shipmentClient = shipmentClient;
             this.logger = logger;
             this.shipmenrRepo = shipmenrRepo;
         }
-
-        public IShipmentClient ShipmentClient { get; }
 
         [HttpPost("{id:int}")]
         public async Task Post(int id)
         {
             var shipment = await this.shipmenrRepo.GetAsync(id);
-            if (shipment == null)
+            if (shipment is null)
             {
                 logger.LogWarning($"Shipment with id {id} NOT found");
                 this.Response.StatusCode = StatusCodes.Status404NotFound;
                 return;
             }
-            _ = ShipmentClient.GetShipmentInfo(shipment);
+            await this.shipmentClient.GetShipmentInfo(shipment);
 
         }
     }

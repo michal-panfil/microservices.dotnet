@@ -15,7 +15,7 @@ namespace WarehouseService.Infrastructure.Serices
         {
             this.hub = hub;
         }
-        public async Task GetShipmentInfo(WarehouseService.Core.Models.Shipment shipment)
+        public async Task GetShipmentInfo(Shipment shipment)
         {
             using var channel = GrpcChannel.ForAddress("http://shipmentgrpc:80");
 
